@@ -1,11 +1,11 @@
 import React from 'react'
 
-function detail() {
+function login() {
   return (
     <div>
-        Detail page
+        login page
     </div>
   )
 }
 
-export default detail
+export default login
