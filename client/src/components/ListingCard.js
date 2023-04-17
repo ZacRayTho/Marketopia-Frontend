@@ -1,9 +1,18 @@
 import React from 'react'
 import Image from "next/image";
 
-function ListingCard({ listing }) {
+function ListingCard({ listing, setShowModal, setModalData }) {
+
+
+
     return (
-        <div className='w-36 md:w-44 2xl:w-72 mb-4 mx-auto bg-transparent rounded-lg min-h-full'>
+        <div 
+        className='w-36 md:w-44 2xl:w-72 mb-4 mx-auto bg-transparent rounded-lg min-h-full' 
+        onClick={() => {
+            setModalData(listing)
+            setShowModal(true)
+        }}
+        >
             <div className='items-center flex min-h-[80%]'>
                 <Image
                     src={listing?.Image[0]}
