@@ -15,8 +15,8 @@ function Modal({ isVisible, setShowModal, modalData }) {
             id='wrapper'
         >
             <button className='fixed left-2 top-2 rounded-full bg-white px-3 py-1' onClick={handleClose}>X</button>
-            <div className='lg:w-3/4'>
-                <div className='min-w-full flex h-5/6 justify-center items-center mt-6'>
+            <div className='h-3/5 w-full  lg:h-full lg:w-3/4'>
+                <div className='min-w-full flex h-full lg:h-5/6 justify-center items-center lg:mt-6'>
                     <button className='mx-auto'>
                         <Image src="./img/chevronLeft.svg" height={100} width={100} />
                     </button>
@@ -27,11 +27,11 @@ function Modal({ isVisible, setShowModal, modalData }) {
                         <Image src="./img/chevronRight.svg" height={100} width={100} />
                     </button>
                 </div>
-                <div className='min-w-full h-1/6 items-center flex justify-center'>
+                <div className='hidden min-w-full lg:flex lg:h-1/6 items-center justify-center'>
                     All Images mapped here
                 </div>
             </div>
-            <div className='absolute lg:right-0 w-1/4 justify-self-end h-full bg-white p-4 space-y-3'>
+            <div className='h-2/5 overflow-scroll w-full bottom-0 absolute justify-self-end bg-white p-4 space-y-3 lg:h-full lg:right-0 lg:w-1/4'>
                 <div className='font-bold text-4xl'>
                     {modalData.title}
                 </div>
