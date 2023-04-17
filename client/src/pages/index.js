@@ -17,7 +17,7 @@ function Home() {
         })
     }, [])
 
-
+    console.log(listings)
     return (
         <GlobalProvider>
             <div className="h-screen flex flex-col">
@@ -27,7 +27,7 @@ function Home() {
                         <Filters />
                     </div>
                     <div className="flex-1 bg-red-200">
-                        <Browse />
+                        <Browse listings={listings} />
                     </div>
                 </div>
             </div>
