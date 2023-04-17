@@ -1,42 +1,69 @@
+import Image from 'next/image'
 import React from 'react'
 
-function Modal({ isVisible, setShowModal, children, modalData }) {
-    // if (!isVisible) return null;
+function Modal({ isVisible, setShowModal, modalData }) {
+    if (!isVisible) return null;
 
-    function handleClose(e) {
-        if (e.target.id == 'wrapper') {
-            setShowModal(false)
-        }
+    function handleClose() {
+        setShowModal(false)
     }
 
     return (
         <div
-            className='fixed inset-0 bg-black bg-opacity-25 backdrop-blur-sm flex justify-center items-center'
-            onClick={handleClose}
+            className='fixed inset-0 bg-black bg-opacity-25 backdrop-blur-sm flex z-40'
+            // onClick={handleClose}
             id='wrapper'
         >
-            <div className=' md:w-[600px] flex flex-col bg-white rounded-xl'>
-                <div className='flex text-black items-center justify-between m-4'>
-                    <div className='text-lg font-bold'>
-                        {/* {modalData.title} */}
+            <button className='fixed left-2 top-2 rounded-full bg-white px-3 py-1' onClick={handleClose}>X</button>
+            <div className='lg:w-3/4'>
+                <div className='min-w-full flex h-5/6 justify-center items-center mt-6'>
+                    <button className='mx-auto'>
+                        <Image src="./img/chevronLeft.svg" height={100} width={100} />
+                    </button>
+                    <div className=' h-full w-[80%] relative'>
+                        <Image src={modalData.Image[0]} fill />
                     </div>
-                    <button
-                        className='text-black text-xl place-self-end '
-                        onClick={() => setShowModal(false)}
-                    >
-                        X
+                    <button className='mx-auto'>
+                        <Image src="./img/chevronRight.svg" height={100} width={100} />
                     </button>
                 </div>
-                <div className='bg-white p-2 rounded text-black border-y-2 text-center'>
-                    {/* {modalData.modal} */}
+                <div className='min-w-full h-1/6 items-center flex justify-center'>
+                    All Images mapped here
                 </div>
-                <div className='text-white m-2 flex justify-end space-x-2'>
-                    {/* <a href={modalData.githubLink} className='py-2 px-4 bg-mediumnavy rounded-lg'> */}
-                        Project Repo
-                    {/* </a> */}
-                    {/* <a href={modalData.projectLink} className='py-2 px-4 bg-mediumnavy rounded-lg'> */}
-                        Check it out!
-                    {/* </a> */}
+            </div>
+            <div className='absolute lg:right-0 w-1/4 justify-self-end h-full bg-white p-4 space-y-3'>
+                <div className='font-bold text-4xl'>
+                    {modalData.title}
+                </div>
+                <div className='font-bold'>
+                    ${modalData.price}
+                </div>
+                <div className='text-sm'>
+                    {
+                        modalData.category.map((cate) => (
+                            <p className='inline opacity-40'>{cate}, </p>
+                        ))
+                    }
+                </div>
+                <div>
+                    <div className='font-bold'>
+                        Details:
+                    </div>
+                    {modalData.description}
+                </div>
+                <div>
+                    <div className='font-bold'>
+                        Location:
+                    </div>
+                    Listed in {modalData.location}
+                </div>
+                <div>
+                    <div className='font-bold'>
+                        Seller Info:
+                    </div>
+                    {modalData.seller}, <br />
+                    NEED TO ADD:Seller Rating, <br />
+                    NEED TO ADD:Seller Message Button
                 </div>
             </div>
         </div>

@@ -16,6 +16,7 @@ module.exports = {
         mtpurple: '#5F3C99',
         mtmedium: '#9A8AC2',
         mtlight: '#E5DFED',
+        mtgray: '#F7F7F7'
       },
     },
   },
