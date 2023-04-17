@@ -3,8 +3,8 @@ import Image from "next/image";
 
 function ListingCard({ listing }) {
     return (
-        <div className='w-48 lg:w-72 mb-4 mx-auto bg-transparent rounded-lg '>
-            <div className='min-h-[12rem]'>
+        <div className='w-36 md:w-44 2xl:w-72 mb-4 mx-auto bg-transparent rounded-lg min-h-full'>
+            <div className='items-center flex min-h-[80%]'>
                 <Image
                     src={listing?.Image[0]}
                     width={100}
