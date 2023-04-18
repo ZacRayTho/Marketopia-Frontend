@@ -6,17 +6,14 @@ function Header() {
 
   const [state, dispatch] = useGlobalState();
 
-  console.log(state, "HERE")
-
-
   return (
     <div className='w-full flex justify-between py-2 items-center px-4 border-b-2 drop-shadow'>
       <div className='font-righteous lg:text-4xl text-mtpurple'>
         MARKETOPIA
       </div>
-      <div className='space-x-2'>
+      <div>
         {!state.currentUser ? (
-          <div>
+          <div className='space-x-2'>
             <Link className='btn' href="/login">
               Log In
             </Link>
@@ -25,7 +22,10 @@ function Header() {
             </Link>
           </div>
         ) : (
-          <div>
+          <div className='space-x-2'>
+            <Link className='btn' href="/profile">
+              Messages
+            </Link>
             <Link className='btn' href="/profile">
               Profile
             </Link>

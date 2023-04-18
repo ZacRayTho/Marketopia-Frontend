@@ -20,7 +20,6 @@ function Home() {
         })
     }, [])
 
-    console.log(listings)
     return (
         
             <div className=" flex flex-col">

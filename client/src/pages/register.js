@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import AuthService from "../services/auth.service";
 import { useRouter } from 'next/navigation'
-import Header from '../components/Header';
 
 function register() {
 
