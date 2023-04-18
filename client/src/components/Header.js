@@ -15,27 +15,22 @@ function Header() {
         MARKETOPIA
       </div>
       <div className='space-x-2'>
-        {
-          !state.currentUser && (
-            <div>
-              <Link className='py-2 px-4 bg-mtpurple rounded-full text-white font-bold' href="/login">
-                Log In
-              </Link>
-              <Link className='py-2 px-4 bg-mtpurple rounded-full text-white font-bold' href="/register">
-                Sign Up
-              </Link>
-            </div>
-          )
-        }
-        {
-          state.currentUser && (
-            <div>
-              <Link className='py-2 px-4 bg-mtpurple rounded-full text-white font-bold' href="/profile">
-                Profile
-              </Link>
-            </div>
-          )
-        }
+        {!state.currentUser ? (
+          <div>
+            <Link className='btn' href="/login">
+              Log In
+            </Link>
+            <Link className='btn' href="/register">
+              Sign Up
+            </Link>
+          </div>
+        ) : (
+          <div>
+            <Link className='btn' href="/profile">
+              Profile
+            </Link>
+          </div>
+        )}
       </div>
     </div>
   )
