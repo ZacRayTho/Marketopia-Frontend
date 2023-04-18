@@ -22,9 +22,8 @@ function Home() {
 
     console.log(listings)
     return (
-        <GlobalProvider>
+        
             <div className="max-h-screen flex flex-col">
-                <Header />
                 <Modal setShowModal={setShowModal} modalData={modalData} isVisible={showModal}/>
                 <div className="flex-1 flex  h-4 max-h-full">
                     <div className="flex w-[19%]">
@@ -35,7 +34,7 @@ function Home() {
                     </div>
                 </div>
             </div>
-        </GlobalProvider>
+        
     );
 }
 

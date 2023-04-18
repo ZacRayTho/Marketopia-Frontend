@@ -32,7 +32,6 @@ function login() {
 
     return (
         <div>
-            <Header />
             <div className='flex'>
                 <form
                     onSubmit={handleLogin}

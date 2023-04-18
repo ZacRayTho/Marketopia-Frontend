@@ -29,7 +29,6 @@ function register() {
 
   return (
     <div className='w-screen h-screen'>
-      <Header />
       <div className='flex'>
         <form
           className='mx-auto border-2 bg-mtgray'
