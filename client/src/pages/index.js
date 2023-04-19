@@ -37,7 +37,7 @@ function Home() {
                 <Modal setShowModal={setShowModal} modalData={modalData} isVisible={showModal}/>
                 <div className="flex-1 flex  h-4 max-h-full">
                     <div className="flex w-[19%]">
-                        <Filters setFilter={setFilter}/>
+                        <Filters setFilter={setFilter} filter={filter}/>
                     </div>
                     <div className="flex-1 bg-mtgray overflow-scroll">
                         <Browse listings={listings} setShowModal={setShowModal} setModalData={setModalData} filter={filter}/>
