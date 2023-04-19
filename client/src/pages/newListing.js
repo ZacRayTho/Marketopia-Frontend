@@ -2,8 +2,12 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import { API_URL } from '../services/auth.constants';
 import { useGlobalState } from '../context/GlobalState';
+import { useRouter } from 'next/navigation'
+import request from '../services/api.request';
 
 function newListing() {
+
+    const router = useRouter();
 
     const [categories, setCategories] = useState([])
     const [locations, setLocations] = useState([])
@@ -35,15 +39,38 @@ function newListing() {
         image: "",
     })
 
+    const [zip, setZip] = useState({
+        city: "",
+        state: "",
+        zip: ""
+    })
+
     function handleChange(key, value) {
         setListing({
             ...listing,
             [key]: value
         })
     }
+    
+    async function locationData(x, y, z) {
+        let options = {
+          url: `create_location/`, // just the endpoint
+          method: 'POST', // sets the method
+          data: { // gets sent in the body of the request
+             city: x,
+             state: y,
+             zip: z
+          }
+        } 
+        let resp = await request(options) // await the response and pass in this fancy object of request options
+        console.log(resp.data, "RESP DATA")
+        // return resp.data // set the response 
+    }
 
+    // console.log(zip, "THE ZIPPER IS HERE")
     function handleRegister(e) {
         e.preventDefault();
+        console.log(listing.location)
         fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(listing.location)}&key=${process.env.NEXT_PUBLIC_GOOGLE_KEY}`)
             .then(response => response.json())
             .then(data => {
@@ -53,30 +80,29 @@ function newListing() {
 
                 // console.log(city); // "Beverly Hills"
                 // console.log(state); // "CA"
-                axios.post(API_URL + "locations/", {
-                    city: city,
-                    state: state,
-                    zip: listing.location
-                })
-                    .then((response) => {
-                        console.log(response)
-                    })
-                    .catch(error => console.error(error));
+                // setZip({city: city, state: state, zip: listing.location})
+                const lockOn = locationData(city, state, listing.location)
+                console.log(lockOn, "LOCK ON")
+                
+                // console.log(listing)
+
+                // axios.post(API_URL + "listings/", {
+                //     title: listing.title,
+                //     description: listing.description,
+                //     price: listing.price,
+                //     location: { city: city, state: state, zip: listing.location },
+                //     category: listing.category,
+                //     image: listing.image,
+                //     seller: state.currentUser?.user_id
+                // })
+                //     .then((response) => {
+                //         console.log(response)
+                //     })
             })
             .catch(error => console.error(error));
-        // console.log(listing)
-        // axios.post(API_URL, {
-        //     title: listing.title,
-        //     description: listing.description,
-        //     price: listing.price,
-        //     location: listing.location,
-        //     category: listing.category,
-        //     image: listing.image,
-        //     seller: state.currentUser?.user_id
-        // })
-        //     .then((response) => {
-        //         console.log(response)
-        //     })
+
+
+        // router.push('/')
     }
 
 
@@ -120,20 +146,23 @@ function newListing() {
                     <label htmlFor='category'>Category:</label>
                     <select
                         className='border'
-                        onChange={(e) => handleChange('category', e.target.value)}
+                        onChange={(e) => {
+                            console.log(e.target.value)
+                            handleChange('category', e.target.value)
+                        }}
                         id='category'
                         required
                     >
                         <option>Category</option>
                         {
                             categories?.map((category => {
-                                return <option>{category.name}</option>
+                                return <option value={category.id} key={category.id}>{category.name}</option>
                             }))
                         }
                     </select>
                 </div>
                 <div className='flex justify-between m-2 items-center space-x-2'>
-                    <label htmlFor='location'>Zipcode:</label>
+                    <label htmlFor='location'>Zip Code:</label>
                     <input
                         className='border'
                         type='text'

@@ -15,7 +15,8 @@ function ListingCard({ listing, setShowModal, setModalData }) {
         >
             <div className='items-center flex min-h-[80%]'>
                 <Image
-                    src={listing?.Image[0]}
+                    src={listing?.Image[0] || 'https://zacraytho.github.io/img/zt-logo.png'}
+                    alt=''
                     width={100}
                     height={100}
                     className='w-full rounded-lg '
