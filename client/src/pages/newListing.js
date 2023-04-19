@@ -35,12 +35,6 @@ function newListing() {
     image: "",
   });
 
-  const [zip, setZip] = useState({
-    city: "",
-    state: "",
-    zip: "",
-  });
-
   function handleChange(key, value) {
     setListing({
       ...listing,
@@ -48,16 +42,13 @@ function newListing() {
     });
   }
 
-  async function locationData(x, y, z) {
+  async function locationData(zip) {
     let options = {
-      url: `create_location/`, // just the endpoint
+      url: `locations/`, // just the endpoint
       method: "POST", // sets the method
       data: {
         // gets sent in the body of the request
-        city: x,
-        state: y,
-        zip: z,
-        zipCodeTest: 40356
+        zip: zip,
       },
     };
     let resp = await request(options); // await the response and pass in this fancy object of request options
@@ -69,58 +60,26 @@ function newListing() {
   function handleRegister(e) {
     e.preventDefault();
     console.log(listing.location);
-    fetch(
-      `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(
-        listing.location
-      )}&key=${process.env.NEXT_PUBLIC_GOOGLE_KEY}`,
-      //   {
-      //     headers: {
-      //       "Access-Control-Allow-Origin": "*",
-      //       "Access-Control-Allow-Methods": "GET",
-      //       "Access-Control-Allow-Credentials": true,
-      //     },
-      //   },
-      { credentials: "include" }
-    )
-      .then((response) => {
-        console.log("yep");
-        console.log(response.json());
-        return response.json();
-      })
-      .then((data) => {
-        // Retrieve city and state from response
-        const city = data.results[0].address_components.find((component) =>
-          component.types.includes("locality")
-        ).long_name;
-        const state = data.results[0].address_components.find((component) =>
-          component.types.includes("administrative_area_level_1")
-        ).short_name;
 
-        // console.log(city); // "Beverly Hills"
-        // console.log(state); // "CA"
-        // setZip({city: city, state: state, zip: listing.location})
-        const lockOn = locationData(city, state, listing.location);
-        console.log(lockOn, "LOCK ON");
+    const lockOn = locationData(city, state, listing.location);
+    console.log(lockOn, "LOCK ON");
 
-        // console.log(listing)
+    // console.log(listing)
 
-        // axios.post(API_URL + "listings/", {
-        //     title: listing.title,
-        //     description: listing.description,
-        //     price: listing.price,
-        //     location: { city: city, state: state, zip: listing.location },
-        //     category: listing.category,
-        //     image: listing.image,
-        //     seller: state.currentUser?.user_id
-        // })
-        //     .then((response) => {
-        //         console.log(response)
-        //     })
-      })
-      .catch((error) => console.error(error));
-
-    // router.push('/')
+    // axios.post(API_URL + "listings/", {
+    //     title: listing.title,
+    //     description: listing.description,
+    //     price: listing.price,
+    //     location: { city: city, state: state, zip: listing.location },
+    //     category: listing.category,
+    //     image: listing.image,
+    //     seller: state.currentUser?.user_id
+    // })
+    //     .then((response) => {
+    //         console.log(response)
+    //     })
   }
+  // router.push('/')
 
   return (
     <div className="w-full">
