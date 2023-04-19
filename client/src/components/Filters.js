@@ -1,13 +1,14 @@
 import Link from "next/link";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useGlobalState } from "../context/GlobalState";
 import axios from "axios";
 import { API_URL } from "../services/auth.constants";
+import Image from "next/image";
 
 function Filters({ setFilter, filter }) {
   const [state, dispatch] = useGlobalState();
   const [categories, setCategories] = useState([]);
-
+  const ref = useRef(null);
   useEffect(() => {
     axios.get(API_URL + "categories/").then((resp) => {
       setCategories(resp.data);
@@ -19,6 +20,7 @@ function Filters({ setFilter, filter }) {
       type: key,
       filterBy: value,
     });
+    ref.current.value = null;
   }
 
   return (
@@ -29,10 +31,21 @@ function Filters({ setFilter, filter }) {
             New Listing
           </Link>
         )}
-        <input
-          className="rounded-full w-5/6 mx-3 my-4 py-2 px-4 outline-none bg-mtgray placeholder:text-gray-600"
-          placeholder="Search Marketopia"
-        ></input>
+        <div className="flex items-center m-3 ">
+          <input
+            ref={ref}
+            className="rounded-l-full w-5/6 h-full py-2 px-4 outline-none bg-mtgray placeholder:text-gray-600"
+            placeholder="Search Marketopia"
+          ></input>
+          <button className="bg-mtpurple p-2 h-full rounded-r-full" onClick={() => handleChange("search", ref.current.value)}>
+            <Image
+              src="./img/search.svg"
+              height={25}
+              width={25}
+              className="invert"
+            />
+          </button>
+        </div>
         <div>
           <label htmlFor="category">Category:</label>
           <select
