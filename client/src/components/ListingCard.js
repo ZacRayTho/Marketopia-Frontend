@@ -4,7 +4,7 @@ import Image from "next/image";
 function ListingCard({ listing, setShowModal, setModalData }) {
   return (
     <div
-      className="w-36 md:w-44 2xl:w-72 mb-4 mx-auto bg-transparent rounded-lg min-h-full"
+      className="w-36 md:w-44 2xl:w-72 mb-4 mx-auto bg-transparent rounded-lg"
       onClick={() => {
         setModalData(listing);
         setShowModal(true);

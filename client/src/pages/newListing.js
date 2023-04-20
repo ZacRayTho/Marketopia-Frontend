@@ -3,26 +3,18 @@ import React, { useEffect, useState } from "react";
 import { API_URL } from "../services/auth.constants";
 import { useGlobalState } from "../context/GlobalState";
 import { useRouter } from "next/navigation";
-import request from "../services/api.request";
 
 function newListing() {
   const router = useRouter();
 
   const [categories, setCategories] = useState([]);
-  const [locations, setLocations] = useState([]);
-
-  let endpoints = ["categories/", "locations/"];
 
   useEffect(() => {
-    axios.all(endpoints.map((endpoint) => axios.get(API_URL + endpoint))).then(
-      axios.spread((categories, locations) => {
-        setCategories([...categories.data]);
-        setLocations([...locations.data]);
-      })
-    );
+    axios
+      .get(API_URL + "categories/")
+      .then((resp) => setCategories([...resp.data]))
+    ;
   }, []);
-
-  // console.log(categories, locations, "HERE SIR")
 
   const [state, dispatch] = useGlobalState();
 
@@ -42,44 +34,42 @@ function newListing() {
     });
   }
 
-  async function locationData(zip) {
-    let options = {
-      url: `locations/`, // just the endpoint
-      method: "POST", // sets the method
-      data: {
-        // gets sent in the body of the request
-        zip: zip,
-      },
-    };
-    let resp = await request(options); // await the response and pass in this fancy object of request options
-    console.log(resp.data, "RESP DATA");
-    // return resp.data // set the response
-  }
-
-  // console.log(zip, "THE ZIPPER IS HERE")
-  function handleRegister(e) {
+  async function handleRegister(e) {
     e.preventDefault();
-    console.log(listing.location);
+    let location;
+    let listing_id;
 
-    const lockOn = locationData(city, state, listing.location);
-    console.log(lockOn, "LOCK ON");
+    await axios
+      .post(API_URL + "locations/", {
+        zip: listing.location,
+      })
+      .then((resp) => {
+        location = resp.data.id;
+      });
 
-    // console.log(listing)
+    await axios
+      .post(API_URL + "listings/", {
+        title: listing.title,
+        description: listing.description,
+        price: listing.price,
+        location: location,
+        category: [parseInt(listing.category)],
+        seller: state.currentUser?.user_id,
+      })
+      .then((response) => {
+        listing_id = response.data.id;
+      });
 
-    // axios.post(API_URL + "listings/", {
-    //     title: listing.title,
-    //     description: listing.description,
-    //     price: listing.price,
-    //     location: { city: city, state: state, zip: listing.location },
-    //     category: listing.category,
-    //     image: listing.image,
-    //     seller: state.currentUser?.user_id
-    // })
-    //     .then((response) => {
-    //         console.log(response)
-    //     })
+    await axios
+      .post(API_URL + "images/", {
+        pic: listing.image,
+        owner: listing_id,
+      })
+      .then((resp) => {
+        console.log(resp);
+      });
+    router.push("/");
   }
-  // router.push('/')
 
   return (
     <div className="w-full">
