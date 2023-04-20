@@ -40,6 +40,7 @@ function Filters({ setFilter, filter }) {
           <button className="bg-mtpurple p-2 h-full rounded-r-full" onClick={() => handleChange("search", ref.current.value)}>
             <Image
               src="./img/search.svg"
+              alt=""
               height={25}
               width={25}
               className="invert"
