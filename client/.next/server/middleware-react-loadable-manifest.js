@@ -1,1 +1,1 @@
-self.__REACT_LOADABLE_MANIFEST={}
+self.__REACT_LOADABLE_MANIFEST={"_app.js -> ../components/Header":{"id":"_app.js -> ../components/Header","files":["static/chunks/src_components_Header_js.js"]},"index.js -> ../components/Filters":{"id":"index.js -> ../components/Filters","files":["static/chunks/src_components_Filters_js.js"]}}
