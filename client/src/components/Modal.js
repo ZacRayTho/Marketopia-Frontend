@@ -12,11 +12,13 @@ function Modal({ isVisible, setShowModal, modalData }) {
 
   function chat() {
     router.push({
-      pathname: '/chat',
-      query: { name: 'John' },
+      pathname: `/chat/${modalData.seller.id}`,
+      query: { fname:modalData.seller.first_name,
+              lname:modalData.seller.last_name          
+      },
     })
   }
-
+  console.log(modalData)
   return (
     <div
       className="fixed inset-0 bg-black bg-opacity-25 backdrop-blur-sm flex z-40"
@@ -50,7 +52,7 @@ function Modal({ isVisible, setShowModal, modalData }) {
         <div className="font-bold">${modalData.price}</div>
         <div className="text-sm">
           {modalData.category.map((cate) => (
-            <p className="inline opacity-40">{cate.name}, </p>
+            <p key={cate.id} className="inline opacity-40">{cate.name}, </p>
           ))}
         </div>
         <div>
@@ -75,7 +77,7 @@ function Modal({ isVisible, setShowModal, modalData }) {
             </div>
             <div className="mx-2 w-full flex justify-between items-center">
               <div>
-                <div>{modalData.seller}</div>
+                <div>{modalData.seller.first_name} {modalData.seller.last_name}</div>
                 <div>
                   <Image src="./img/star.svg" height={25} width={25} alt="" />
                 </div>
