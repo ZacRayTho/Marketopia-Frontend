@@ -5,7 +5,7 @@ import axios from "axios";
 import { API_URL } from "../services/auth.constants";
 import Image from "next/image";
 
-function Filters({ setFilter, filter }) {
+function Filters({ setFilter, filter , setShowFilter}) {
   const [state, dispatch] = useGlobalState();
   const [categories, setCategories] = useState([]);
   const ref = useRef(null);

@@ -12,9 +12,12 @@ function Header() {
       <div className="font-righteous lg:text-4xl text-mtpurple">
         <Link href="/">MARKETOPIA</Link>
       </div>
-      <div>
+      <div className="flex items-center"> 
+        {/* <div>
+          <button className="btn lg:hidden">Filters</button>
+        </div> */}
         {!state.currentUser ? (
-          <div className="space-x-2">
+          <div className="lg:space-x-2">
             <Link className="btn" href="/login">
               Log In
             </Link>
@@ -23,7 +26,7 @@ function Header() {
             </Link>
           </div>
         ) : (
-          <div className="space-x-2">
+          <div className="lg:space-x-2">
             <Link className="btn" href="/chat">
               Messages
             </Link>
