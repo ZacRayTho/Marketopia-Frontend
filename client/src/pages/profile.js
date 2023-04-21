@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useGlobalState } from "../context/GlobalState";
-import authService from "../services/auth.service";
+import AuthService from "../services/auth.service";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import axios from "axios";
@@ -18,18 +18,22 @@ function profile() {
 
   useEffect(() => {
     axios.get(API_URL + "listings/").then((resp) => {
-      console.log(resp.data)
+      // console.log(resp.data);
       setListings(resp.data);
     });
-    axios.get(API_URL + `users/${state.currentUser.user_id}/`).then((resp) => {
-      console.log(resp);
+    axios.get(API_URL + `users/${state.currentUser?.user_id}/`).then((resp) => {
+      // console.log(resp);
       setUser(resp.data.first_name + " " + resp.data.last_name);
     });
   }, []);
 
   function logout() {
-    authService.logout;
+    AuthService.logout();
     router.push("/");
+    dispatch({
+      currentUserToken: null,
+      currentUser: null,
+    });
   }
 
   function destroy(id) {
@@ -51,7 +55,7 @@ function profile() {
       />
       <div className="mx-auto w-52 mt-5 flex-col flex text-center">
         {/* {state.currentUser?.user_id} */}
-        <button className="btn" onClick={authService.logout}>
+        <button className="btn" onClick={logout}>
           Log out
         </button>
       </div>
@@ -59,7 +63,9 @@ function profile() {
         <div>Your Listings</div>
         <div className="flex justify-center">
           {listings
-            .filter((listing) => listing.seller.id == state.currentUser?.user_id)
+            .filter(
+              (listing) => listing.seller.id == state.currentUser?.user_id
+            )
             .map((listing) => (
               <div key={listing.id}>
                 <ListingCard key={listing.id} listing={listing} page="edit" />

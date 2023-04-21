@@ -10,43 +10,56 @@ import { API_URL } from "../services/auth.constants";
 
 const Filters = dynamic(() => import("../components/Filters"), { ssr: false });
 
-
 function Home() {
-    const [listings, setListings] = useState([])
-    const [showModal, setShowModal] = useState(false)
-    const [modalData, setModalData] = useState(null)
-    const [filter, setFilter] = useState({
-        type: "",
-        filterBy: ""
-    })
+  const [listings, setListings] = useState([]);
+  const [showModal, setShowModal] = useState(false);
+  const [modalData, setModalData] = useState(null);
+  const [showFilter, setShowFilter] = useState(false);
+  const [filter, setFilter] = useState({
+    type: "",
+    filterBy: "",
+  });
 
-    const BASE_URL = "https://8000-zacraytho-marketopiabac-f72s9pmcyzg.ws-us95.gitpod.io/api/listings/"
-  
-    useEffect(() => {
-        axios.get(API_URL + "listings/")
-        .then((response) => {
-            setListings(response.data)
-        })
-    }, [])
+  const BASE_URL =
+    "https://8000-zacraytho-marketopiabac-f72s9pmcyzg.ws-us95.gitpod.io/api/listings/";
 
-    console.log(listings)
+  useEffect(() => {
+    axios.get(API_URL + "listings/").then((response) => {
+      setListings(response.data);
+    });
+  }, []);
 
+  console.log(listings);
 
-    return (
-        
-            <div className=" flex flex-col">
-                <Modal setShowModal={setShowModal} modalData={modalData} isVisible={showModal}/>
-                <div className="flex-1 flex  h-4 max-h-full">
-                    <div className="flex w-[19%]">
-                        <Filters setFilter={setFilter} filter={filter}/>
-                    </div>
-                    <div className="flex-1 bg-mtgray overflow-scroll">
-                        <Browse listings={listings} setShowModal={setShowModal} setModalData={setModalData} filter={filter}/>
-                    </div>
-                </div>
-            </div>
-        
-    );
+  return (
+    <div className=" flex flex-col">
+      <Modal
+        setShowModal={setShowModal}
+        modalData={modalData}
+        isVisible={showModal}
+      />
+      <div className="flex-1 flex  h-4 max-h-full ">
+        <div className={ showFilter ? "w-full lg:flex lg:w-[19%]" : "hidden w-full lg:flex lg:w-[19%]"}>
+          <Filters
+            setFilter={setFilter}
+            filter={filter}
+            showFilter={showFilter}
+            setShowFilter={setShowFilter}
+          />
+        </div>
+        <div className="flex-1 bg-mtgray overflow-scroll">
+          <Browse
+            listings={listings}
+            setShowModal={setShowModal}
+            setModalData={setModalData}
+            filter={filter}
+            showFilter={showFilter}
+            setShowFilter={setShowFilter}
+          />
+        </div>
+      </div>
+    </div>
+  );
 }
 
 export default Home;

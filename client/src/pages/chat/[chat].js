@@ -5,10 +5,12 @@ import { useGlobalState } from "../../context/GlobalState";
 import moment from "moment";
 import axios from "axios";
 import { API_URL } from "../../services/auth.constants";
+import toast from 'react-hot-toast'
 
 function chat() {
   const [state, dispatch] = useGlobalState();
   const [chat, setChat] = useState([]);
+  const [review, setReview] = useState([]);
   const router = useRouter();
   const data = router?.query.chat;
   const name = router?.query.fname + " " + router?.query.lname;
@@ -21,8 +23,13 @@ function chat() {
       .then((resp) => {
         setChat(resp.data);
       });
-  }, [router.isReady]);
 
+    axios.get(API_URL + `review_fetch/${state.currentUser?.user_id}/${data}/`)
+    .then((resp) => {
+      setReview(resp.data);
+    })
+  }, [router.isReady]);
+  console.log(review)
   async function send() {
     await axios
       .post(API_URL + "messages/", {
@@ -38,18 +45,41 @@ function chat() {
       });
     window.location.reload(true);
   }
-  console.log(chat);
+
+  function newReview(stars) {
+    if (review.length == 0) {
+    axios.post(API_URL + "reviews/", {
+      seller: data,
+      rating: stars,
+    }).then((resp) => {
+      // console.log(resp, "REVIEW RESP")
+      toast("REVIEW POSTED")
+    })
+  } else {
+    axios.patch(API_URL + `reviews/${review[0].id}/`, {
+      rating: stars
+    }).then((resp) => {
+      // console.log(resp, "PATCHED")
+      toast("REVIEW UPDATED")
+    })
+  }
+  }
+
   return (
     <div className="w-full h-[calc(100vh-6.4rem)] border-r-2 border-l-2 flex justify-center">
       <div className="bg-mtgray md:w-1/2 h-full text-center lg:text-xl relative overflow-y-auto">
-        <div>You're Messaging {name}!</div>
-        <div>
-          Review ?
-          <button></button>
-          <button></button>
-          <button></button>
-          <button></button>
-          <button></button>
+        <div className="flex justify-between px-2 items-center">
+          <div className="items-center">You're Messaging {name}!</div>
+          <div className="space-x-2 flex items-center">
+            <div>Review</div>
+            <div>
+            <button onClick={() => newReview(1)} className="rounded-l-lg bg-mtpurple p-2">1</button>
+            <button onClick={() => newReview(2)} className="bg-mtpurple p-2">2</button>
+            <button onClick={() => newReview(3)} className="bg-mtpurple p-2">3</button>
+            <button onClick={() => newReview(4)} className="bg-mtpurple p-2">4</button>
+            <button onClick={() => newReview(5)} className="rounded-r-lg bg-mtpurple p-2">5</button>
+            </div>
+          </div>
         </div>
         <div className="border h-[calc(100vh-10.5rem)]">
           {chat.map((message) => {
