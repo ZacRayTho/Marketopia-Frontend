@@ -6,6 +6,7 @@ import { GlobalProvider } from "../context/GlobalState";
 import axios from "axios";
 import Modal from "../components/Modal";
 import dynamic from "next/dynamic";
+import { API_URL } from "../services/auth.constants";
 
 const Filters = dynamic(() => import("../components/Filters"), { ssr: false });
 
@@ -19,10 +20,10 @@ function Home() {
         filterBy: ""
     })
 
-    const BASE_URL = "https://8000-zacraytho-marketopiabac-f72s9pmcyzg.ws-us94.gitpod.io/api/listings/"
+    const BASE_URL = "https://8000-zacraytho-marketopiabac-f72s9pmcyzg.ws-us95.gitpod.io/api/listings/"
   
     useEffect(() => {
-        axios.get(BASE_URL)
+        axios.get(API_URL + "listings/")
         .then((response) => {
             setListings(response.data)
         })

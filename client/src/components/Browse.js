@@ -11,6 +11,7 @@ function Browse({ listings, setShowModal, setModalData, filter }) {
             listing={listing}
             setShowModal={setShowModal}
             setModalData={setModalData}
+            page="browse"
           />
         ));
       case "category":
@@ -22,6 +23,7 @@ function Browse({ listings, setShowModal, setModalData, filter }) {
               listing={listing}
               setShowModal={setShowModal}
               setModalData={setModalData}
+              page="browse"
             />
           ));
       case "search":
@@ -41,6 +43,7 @@ function Browse({ listings, setShowModal, setModalData, filter }) {
               listing={listing}
               setShowModal={setShowModal}
               setModalData={setModalData}
+              page="browse"
             />
           ));
     }
