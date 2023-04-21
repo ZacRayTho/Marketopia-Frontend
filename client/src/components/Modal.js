@@ -1,10 +1,12 @@
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import React from "react";
+import { useGlobalState } from "../context/GlobalState";
 
 function Modal({ isVisible, setShowModal, modalData }) {
   if (!isVisible) return null;
   const router = useRouter();
+  const [state, dispatch] = useGlobalState();
 
   function handleClose() {
     setShowModal(false);
@@ -83,7 +85,7 @@ function Modal({ isVisible, setShowModal, modalData }) {
                 </div>
               </div>
               <div>
-                <button className="btn" onClick={chat}>Message</button>
+                <button className="btn disabled:opacity-50" onClick={chat} disabled={state.currentUser?.user_id==undefined}>Message</button>
               </div>
             </div>
           </div>

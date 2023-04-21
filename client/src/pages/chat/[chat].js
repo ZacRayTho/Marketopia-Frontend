@@ -43,6 +43,14 @@ function chat() {
     <div className="w-full h-[calc(100vh-6.4rem)] border-r-2 border-l-2 flex justify-center">
       <div className="bg-mtgray md:w-1/2 h-full text-center lg:text-xl relative overflow-y-auto">
         <div>You're Messaging {name}!</div>
+        <div>
+          Review ?
+          <button></button>
+          <button></button>
+          <button></button>
+          <button></button>
+          <button></button>
+        </div>
         <div className="border h-[calc(100vh-10.5rem)]">
           {chat.map((message) => {
             return (

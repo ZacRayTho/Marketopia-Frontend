@@ -18,6 +18,7 @@ function profile() {
 
   useEffect(() => {
     axios.get(API_URL + "listings/").then((resp) => {
+      console.log(resp.data)
       setListings(resp.data);
     });
     axios.get(API_URL + `users/${state.currentUser.user_id}/`).then((resp) => {
@@ -58,9 +59,9 @@ function profile() {
         <div>Your Listings</div>
         <div className="flex justify-center">
           {listings
-            .filter((listing) => listing.seller == user)
+            .filter((listing) => listing.seller.id == state.currentUser?.user_id)
             .map((listing) => (
-              <div>
+              <div key={listing.id}>
                 <ListingCard key={listing.id} listing={listing} page="edit" />
                 <button className="btn" onClick={() => edit(listing)}>
                   Edit
