@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/router";
 import Image from "next/image";
 import { useGlobalState } from "../../context/GlobalState";
@@ -8,6 +8,7 @@ import { API_URL } from "../../services/auth.constants";
 
 function chat() {
   const [state, dispatch] = useGlobalState();
+  const [chat, setChat] = useState([]);
   const router = useRouter();
   const data = router?.query.chat;
   const name = router?.query.fname + " " + router?.query.lname;
@@ -15,9 +16,11 @@ function chat() {
 
   useEffect(() => {
     if (!router.isReady) return;
-    axios.get(
-      API_URL + `message_list/${state.currentUser?.user_id}/${data}/`
-    ).then((resp) => {console.log(resp.data)})
+    axios
+      .get(API_URL + `message_list/${state.currentUser?.user_id}/${data}/`)
+      .then((resp) => {
+        setChat(resp.data);
+      });
   }, [router.isReady]);
 
   async function send() {
@@ -33,14 +36,36 @@ function chat() {
       .then((resp) => {
         console.log(resp);
       });
-    // window.location.reload(true);
+    window.location.reload(true);
   }
-
+  console.log(chat);
   return (
     <div className="w-full h-[calc(100vh-6.4rem)] border-r-2 border-l-2 flex justify-center">
-      <div className="bg-mtgray md:w-1/2 h-full text-center lg:text-xl relative">
+      <div className="bg-mtgray md:w-1/2 h-full text-center lg:text-xl relative overflow-y-auto">
         <div>You're Messaging {name}!</div>
-        <div className="border h-[calc(100vh-10.5rem)]">chat</div>
+        <div className="border h-[calc(100vh-10.5rem)]">
+          {chat.map((message) => {
+            return (
+              <div
+                className={
+                  message.sender == state.currentUser?.user_id
+                    ? "w-full flex justify-end"
+                    : "w-full flex justify-start"
+                }
+              >
+                <div
+                  className={
+                    message.sender == state.currentUser?.user_id
+                      ? "border px-4 rounded-full border-mtpurple w-fit"
+                      : "border px-4 rounded-full"
+                  }
+                >
+                  {message.text}
+                </div>
+              </div>
+            );
+          })}
+        </div>
         <div className="flex absolute bottom-0 w-full">
           <input
             type="text"

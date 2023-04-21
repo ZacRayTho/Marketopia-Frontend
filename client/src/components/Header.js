@@ -24,7 +24,7 @@ function Header() {
           </div>
         ) : (
           <div className="space-x-2">
-            <Link className="btn" href="/profile">
+            <Link className="btn" href="/chat">
               Messages
             </Link>
             <Link className="btn" href="/profile">
