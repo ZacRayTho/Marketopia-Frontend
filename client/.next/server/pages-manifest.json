@@ -3,6 +3,6 @@
   "/_error": "pages/_error.js",
   "/_document": "pages/_document.js",
   "/": "pages/index.js",
-  "/chat": "pages/chat.js",
-  "/profile": "pages/profile.js"
+  "/chat/[chat]": "pages/chat/[chat].js",
+  "/chat": "pages/chat.js"
 }

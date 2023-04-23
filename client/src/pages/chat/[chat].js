@@ -5,7 +5,7 @@ import { useGlobalState } from "../../context/GlobalState";
 import moment from "moment";
 import axios from "axios";
 import { API_URL } from "../../services/auth.constants";
-import toast from 'react-hot-toast'
+import toast from "react-hot-toast";
 
 function chat() {
   const [state, dispatch] = useGlobalState();
@@ -24,12 +24,13 @@ function chat() {
         setChat(resp.data);
       });
 
-    axios.get(API_URL + `review_fetch/${state.currentUser?.user_id}/${data}/`)
-    .then((resp) => {
-      setReview(resp.data);
-    })
+    axios
+      .get(API_URL + `review_fetch/${state.currentUser?.user_id}/${data}/`)
+      .then((resp) => {
+        setReview(resp.data);
+      });
   }, [router.isReady]);
-  console.log(review)
+
   async function send() {
     await axios
       .post(API_URL + "messages/", {
@@ -48,21 +49,26 @@ function chat() {
 
   function newReview(stars) {
     if (review.length == 0) {
-    axios.post(API_URL + "reviews/", {
-      seller: data,
-      rating: stars,
-    }).then((resp) => {
-      // console.log(resp, "REVIEW RESP")
-      toast("REVIEW POSTED")
-    })
-  } else {
-    axios.patch(API_URL + `reviews/${review[0].id}/`, {
-      rating: stars
-    }).then((resp) => {
-      // console.log(resp, "PATCHED")
-      toast("REVIEW UPDATED")
-    })
-  }
+      axios
+        .post(API_URL + "reviews/", {
+          seller: data,
+          reviewer: state.currentUser.user_id,
+          rating: stars,
+        })
+        .then((resp) => {
+          // console.log(resp, "REVIEW RESP")
+          toast("REVIEW POSTED");
+        });
+    } else {
+      axios
+        .patch(API_URL + `reviews/${review[0].id}/`, {
+          rating: stars,
+        })
+        .then((resp) => {
+          // console.log(resp, "PATCHED")
+          toast("REVIEW UPDATED");
+        });
+    }
   }
 
   return (
@@ -73,11 +79,27 @@ function chat() {
           <div className="space-x-2 flex items-center">
             <div>Review</div>
             <div>
-            <button onClick={() => newReview(1)} className="rounded-l-lg bg-mtpurple p-2">1</button>
-            <button onClick={() => newReview(2)} className="bg-mtpurple p-2">2</button>
-            <button onClick={() => newReview(3)} className="bg-mtpurple p-2">3</button>
-            <button onClick={() => newReview(4)} className="bg-mtpurple p-2">4</button>
-            <button onClick={() => newReview(5)} className="rounded-r-lg bg-mtpurple p-2">5</button>
+              <button
+                onClick={() => newReview(1)}
+                className="rounded-l-lg bg-mtpurple p-2"
+              >
+                1
+              </button>
+              <button onClick={() => newReview(2)} className="bg-mtpurple p-2">
+                2
+              </button>
+              <button onClick={() => newReview(3)} className="bg-mtpurple p-2">
+                3
+              </button>
+              <button onClick={() => newReview(4)} className="bg-mtpurple p-2">
+                4
+              </button>
+              <button
+                onClick={() => newReview(5)}
+                className="rounded-r-lg bg-mtpurple p-2"
+              >
+                5
+              </button>
             </div>
           </div>
         </div>
