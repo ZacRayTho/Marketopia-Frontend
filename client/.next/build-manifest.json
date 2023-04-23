@@ -35,10 +35,10 @@
       "static/chunks/main.js",
       "static/chunks/pages/chat.js"
     ],
-    "/profile": [
+    "/chat/[chat]": [
       "static/chunks/webpack.js",
       "static/chunks/main.js",
-      "static/chunks/pages/profile.js"
+      "static/chunks/pages/chat/[chat].js"
     ]
   },
   "ampFirstPages": []

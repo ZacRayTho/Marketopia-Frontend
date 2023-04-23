@@ -3,6 +3,9 @@ import React, { useEffect, useState } from "react";
 import { API_URL } from "../services/auth.constants";
 import { useGlobalState } from "../context/GlobalState";
 import { useRouter } from "next/navigation";
+import storage from "../firebaseConfig";
+import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
+import toast from 'react-hot-toast'
 
 function newListing() {
   const router = useRouter();
@@ -12,8 +15,7 @@ function newListing() {
   useEffect(() => {
     axios
       .get(API_URL + "categories/")
-      .then((resp) => setCategories([...resp.data]))
-    ;
+      .then((resp) => setCategories([...resp.data]));
   }, []);
 
   const [state, dispatch] = useGlobalState();
@@ -60,21 +62,33 @@ function newListing() {
         listing_id = response.data.id;
       });
 
-    await axios
-      .post(API_URL + "images/", {
-        pic: listing.image,
-        owner: listing_id,
-      })
-      .then((resp) => {
-        console.log(resp);
-      });
-    router.push("/");
+    const storageRef = ref(storage, `/files/${listing.image.name}`);
+    const uploadTask = uploadBytesResumable(storageRef, listing.image);
+    await uploadTask.on(
+      (err) => console.log(err),
+      () => {
+        // download url
+        getDownloadURL(uploadTask.snapshot.ref).then((url) => {
+          axios
+            .post(API_URL + "images/", {
+              pic: url,
+              owner: listing_id,
+            })
+            .then((resp) => {
+              console.log(resp);
+              toast("Item Posted")
+            });
+        });
+      }
+    );
+    setTimeout(
+    router.push("/"), 3000);
   }
 
   return (
     <div className="w-full">
       <form
-        className="mx-auto border-2 bg-mtgray w-1/2 mt-2"
+        className="mx-auto border-2 bg-mtgray md:w-3/4  lg:w-1/2 mt-2 max-w-2xl"
         onSubmit={handleRegister}
       >
         <div className="flex justify-between m-2 items-center space-x-2">
@@ -137,28 +151,16 @@ function newListing() {
             required
             onChange={(e) => handleChange("location", e.target.value)}
           />
-          {/* <select
-                        className='border'
-                        onChange={(e) => handleChange('location', e.target.value)}
-                        id='location'
-                        required
-                    >
-                        <option>Pick location</option>
-                        {
-                            locations?.map((location => {
-                                return <option id={location.id}>{location.name}</option>
-                            }))
-                        }
-                    </select> */}
         </div>
         <div className="flex justify-between m-2 items-center space-x-2">
           <label htmlFor="image">Image:</label>
           <input
             className="border"
-            type="text"
+            type="file"
+            accept="image/*"
             id="image"
             required
-            onChange={(e) => handleChange("image", e.target.value)}
+            onChange={(e) => handleChange("image", e.target.files[0])}
           />
         </div>
         <div className="flex">
