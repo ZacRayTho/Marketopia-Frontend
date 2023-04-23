@@ -15,12 +15,13 @@ function Modal({ isVisible, setShowModal, modalData }) {
   function chat() {
     router.push({
       pathname: `/chat/${modalData.seller.id}`,
-      query: { fname:modalData.seller.first_name,
-              lname:modalData.seller.last_name          
+      query: {
+        fname: modalData.seller.first_name,
+        lname: modalData.seller.last_name,
       },
-    })
+    });
   }
-  console.log(modalData)
+
   return (
     <div
       className="fixed inset-0 bg-black bg-opacity-25 backdrop-blur-sm flex z-40"
@@ -36,13 +37,23 @@ function Modal({ isVisible, setShowModal, modalData }) {
       <div className="h-3/5 w-full  lg:h-full lg:w-3/4">
         <div className="min-w-full flex h-full lg:h-5/6 justify-center items-center lg:mt-6">
           <button className="mx-auto">
-            <Image src="./img/chevronLeft.svg" height={100} width={100} alt="" />
+            <Image
+              src="./img/chevronLeft.svg"
+              height={100}
+              width={100}
+              alt=""
+            />
           </button>
           <div className=" h-full w-[80%] relative">
             <Image src={modalData.Image[0]} fill alt="" />
           </div>
           <button className="mx-auto">
-            <Image src="./img/chevronRight.svg" height={100} width={100} alt="" />
+            <Image
+              src="./img/chevronRight.svg"
+              height={100}
+              width={100}
+              alt=""
+            />
           </button>
         </div>
         <div className="hidden min-w-full lg:flex lg:h-1/6 items-center justify-center">
@@ -54,7 +65,9 @@ function Modal({ isVisible, setShowModal, modalData }) {
         <div className="font-bold">${modalData.price}</div>
         <div className="text-sm">
           {modalData.category.map((cate) => (
-            <p key={cate.id} className="inline opacity-40">{cate.name}, </p>
+            <p key={cate.id} className="inline opacity-40">
+              {cate.name},{" "}
+            </p>
           ))}
         </div>
         <div>
@@ -79,13 +92,21 @@ function Modal({ isVisible, setShowModal, modalData }) {
             </div>
             <div className="mx-2 w-full flex justify-between items-center">
               <div>
-                <div>{modalData.seller.first_name} {modalData.seller.last_name}</div>
+                <div>
+                  {modalData.seller.first_name} {modalData.seller.last_name}
+                </div>
                 <div>
                   <Image src="./img/star.svg" height={25} width={25} alt="" />
                 </div>
               </div>
               <div>
-                <button className="btn disabled:opacity-50" onClick={chat} disabled={state.currentUser?.user_id==undefined}>Message</button>
+                <button
+                  className="btn disabled:opacity-50"
+                  onClick={chat}
+                  disabled={state.currentUser?.user_id == undefined}
+                >
+                  Message
+                </button>
               </div>
             </div>
           </div>

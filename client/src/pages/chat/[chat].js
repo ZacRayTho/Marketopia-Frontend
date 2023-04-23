@@ -52,6 +52,7 @@ function chat() {
       axios
         .post(API_URL + "reviews/", {
           seller: data,
+          reviewer: state.currentUser.user_id,
           rating: stars,
         })
         .then((resp) => {
