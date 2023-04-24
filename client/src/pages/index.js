@@ -19,6 +19,7 @@ function Home() {
     type: "",
     filterBy: "",
   });
+  const [sort, setSort] = useState(null)
 
   const BASE_URL =
     "https://8000-zacraytho-marketopiabac-f72s9pmcyzg.ws-us95.gitpod.io/api/listings/";
@@ -29,7 +30,6 @@ function Home() {
     });
   }, []);
 
-  console.log(listings);
 
   return (
     <div className=" flex flex-col">
@@ -45,6 +45,7 @@ function Home() {
             filter={filter}
             showFilter={showFilter}
             setShowFilter={setShowFilter}
+            setSort={setSort}
           />
         </div>
         <div className="flex-1 bg-mtgray overflow-scroll">
@@ -55,6 +56,7 @@ function Home() {
             filter={filter}
             showFilter={showFilter}
             setShowFilter={setShowFilter}
+            sort={sort}
           />
         </div>
       </div>

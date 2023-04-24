@@ -8,72 +8,62 @@ function Browse({
   filter,
   showFilter,
   setShowFilter,
+  sort,
 }) {
   function filtered() {
-    switch (filter.type) {
-      case "":
-        return listings.map((listing) => (
-          <ListingCard
-            key={listing.id}
-            listing={listing}
-            setShowModal={setShowModal}
-            setModalData={setModalData}
-            page="browse"
-          />
-        ));
-      case "category":
-        return listings
-          .filter((listing) => listing.category[0].id == filter.filterBy)
-          .map((listing) => (
-            <ListingCard
-              key={listing.id}
-              listing={listing}
-              setShowModal={setShowModal}
-              setModalData={setModalData}
-              page="browse"
-            />
-          ));
-      case "search":
-        return listings
-          .filter(
-            (listing) =>
-              listing.title
-                .toLowerCase()
-                .includes(filter.filterBy.toLowerCase()) ||
-              listing.description
-                .toLowerCase()
-                .includes(filter.filterBy.toLowerCase())
-          )
-          .map((listing) => (
-            <ListingCard
-              key={listing.id}
-              listing={listing}
-              setShowModal={setShowModal}
-              setModalData={setModalData}
-              page="browse"
-            />
-          ));
-      case "Location":
-        let cityArray = []
-        for (let city of filter.filterBy) {
-          cityArray.push(`${city.city}, ${city.state}`)
-        }
-        return listings
-          .filter(
-            (listing) =>
-              cityArray.includes(listing.location)
-          )
-          .map((listing) => (
-            <ListingCard
-              key={listing.id}
-              listing={listing}
-              setShowModal={setShowModal}
-              setModalData={setModalData}
-              page="browse"
-            />
-          ));
+    // Define filter functions for each active filter
+    const filterFunctions = [];
+    if (filter.type === "category") {
+      filterFunctions.push(
+        (listing) => listing.category[0].id == filter.filterBy
+      );
     }
+    if (filter.type === "search") {
+      filterFunctions.push(
+        (listing) =>
+          listing.title.toLowerCase().includes(filter.filterBy.toLowerCase()) ||
+          listing.description
+            .toLowerCase()
+            .includes(filter.filterBy.toLowerCase())
+      );
+    }
+    if (filter.type === "Location") {
+      const cityArray = filter.filterBy.map(
+        (city) => `${city.city}, ${city.state}`
+      );
+      filterFunctions.push((listing) => cityArray.includes(listing.location));
+    }
+
+    // Apply all filter functions to the listings
+    const filteredListings = filterFunctions.reduce(
+      (listings, filterFunction) => {
+        return listings.filter(filterFunction);
+      },
+      listings
+    );
+
+    let sortedListings = [...filteredListings];
+    switch (sort) {
+      case 'pricea':
+        sortedListings = sortedListings.sort((a, b) => a.price - b.price);
+        break;
+      case 'priced':
+        sortedListings = sortedListings.sort((a, b) => b.price - a.price);
+        break;
+    }
+
+    // Map the filtered listings to ListingCard components
+    return sortedListings.map((listing) => (
+      <ListingCard
+        key={listing.id}
+        listing={listing}
+        setShowModal={setShowModal}
+        setModalData={setModalData}
+        page="browse"
+      />
+    ));
   }
+
   return (
     <div className="">
       <div className="text-center text-xl font-bold my-2">Today's picks</div>

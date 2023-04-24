@@ -9,6 +9,7 @@ function index() {
   const [state, dispatch] = useGlobalState();
   const [chats, setChats] = useState([]);
   const router = useRouter();
+  
   useEffect(() => {
     axios
       .get(API_URL + `chat_list/${state.currentUser.user_id}/`)

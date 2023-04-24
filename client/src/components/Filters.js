@@ -5,7 +5,7 @@ import axios from "axios";
 import { API_URL } from "../services/auth.constants";
 import Image from "next/image";
 
-function Filters({ setFilter, filter, setShowFilter }) {
+function Filters({ setFilter, filter, setShowFilter, setSort }) {
   const [state, dispatch] = useGlobalState();
   const [categories, setCategories] = useState([]);
   const [sliderValue, setSliderValue] = useState(50);
@@ -24,18 +24,19 @@ function Filters({ setFilter, filter, setShowFilter }) {
     });
     ref.current.value = null;
   }
-  console.log(filter)
+ 
   function locationFilter() {
-    axios.post(API_URL + `locations2/`, {
-      zip: zipcode.current.value,
-      range: sliderValue
-    })
-    .then((resp) => {
-      setFilter({
-        type: "Location",
-        filterBy: resp.data
+    axios
+      .post(API_URL + `locations2/`, {
+        zip: zipcode.current.value,
+        range: sliderValue,
       })
-    })
+      .then((resp) => {
+        setFilter({
+          type: "Location",
+          filterBy: resp.data,
+        });
+      });
   }
   return (
     <div className="flex-1 border-r-2 flex flex-col justify-between ">
@@ -64,6 +65,17 @@ function Filters({ setFilter, filter, setShowFilter }) {
             />
           </button>
         </div>
+        <hr className="border border-t-1 border-gray-200 my-4 w-4/5" />
+        <div>
+          <label htmlFor="sort">Sort By:</label>
+          <select name="sort" id="sort" onChange={(e) => {setSort(e.target.value)}}>
+            <option value={""} disabled></option>
+            <option value="pricea">Price (Asc)</option>
+            <option value="priced">Price (Dsc)</option>
+            <option value="range">Range </option>
+          </select>
+        </div>
+        <hr className="border border-t-1 border-gray-200 my-4 w-4/5" />
         <div>
           <label htmlFor="category">Category:</label>
           <select
@@ -74,7 +86,7 @@ function Filters({ setFilter, filter, setShowFilter }) {
             }}
             id="category"
           >
-            <option>Category</option>
+            <option></option>
             {categories?.map((category) => {
               return (
                 <option value={category.id} key={category.id}>
@@ -84,12 +96,17 @@ function Filters({ setFilter, filter, setShowFilter }) {
             })}
           </select>
         </div>
-        <hr className="border border-t-1 border-mtgray mt-4 w-4/5" />
+        <hr className="border border-t-1 border-gray-200 mt-4 w-4/5" />
 
         <div className="my-4  space-y-2">
           <div className="flex justify-center">
             <label htmlFor="location">Location:</label>
-            <input type="number" placeholder="Zip Code" className="border" ref={zipcode}/>
+            <input
+              type="number"
+              placeholder="Zip Code"
+              className="border"
+              ref={zipcode}
+            />
           </div>
           <div className="items-center flex justify-center">
             <label for="range">Range:</label>
@@ -115,9 +132,11 @@ function Filters({ setFilter, filter, setShowFilter }) {
               }}
             />
           </div>
-          <button className="btn flex mx-auto" onClick={locationFilter}>Search Range</button>
+          <button className="btn flex mx-auto" onClick={locationFilter}>
+            Search Range
+          </button>
         </div>
-        <hr className="border border-t-1 border-mtgray  w-4/5" />
+        <hr className="border border-t-1 border-gray-200  w-4/5" />
       </div>
       <div>
         <button
