@@ -1,7 +1,14 @@
 import React from "react";
 import ListingCard from "./ListingCard";
 
-function Browse({ listings, setShowModal, setModalData, filter, showFilter, setShowFilter }) {
+function Browse({
+  listings,
+  setShowModal,
+  setModalData,
+  filter,
+  showFilter,
+  setShowFilter,
+}) {
   function filtered() {
     switch (filter.type) {
       case "":
@@ -46,13 +53,38 @@ function Browse({ listings, setShowModal, setModalData, filter, showFilter, setS
               page="browse"
             />
           ));
+      case "Location":
+        let cityArray = []
+        for (let city of filter.filterBy) {
+          cityArray.push(`${city.city}, ${city.state}`)
+        }
+        return listings
+          .filter(
+            (listing) =>
+              cityArray.includes(listing.location)
+          )
+          .map((listing) => (
+            <ListingCard
+              key={listing.id}
+              listing={listing}
+              setShowModal={setShowModal}
+              setModalData={setModalData}
+              page="browse"
+            />
+          ));
     }
   }
-
   return (
     <div className="">
       <div className="text-center text-xl font-bold my-2">Today's picks</div>
-      <div className="btn absolute bottom-5 right-5 lg:hidden" onClick={() => {setShowFilter(!showFilter)}}>Options </div>
+      <div
+        className="btn absolute bottom-5 right-5 lg:hidden"
+        onClick={() => {
+          setShowFilter(!showFilter);
+        }}
+      >
+        Options{" "}
+      </div>
       <div className="h-[calc(100vh-6.4rem)] grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
         {filtered()}
       </div>

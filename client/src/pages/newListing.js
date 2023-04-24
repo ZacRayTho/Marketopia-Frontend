@@ -5,7 +5,7 @@ import { useGlobalState } from "../context/GlobalState";
 import { useRouter } from "next/navigation";
 import storage from "../firebaseConfig";
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
-import toast from 'react-hot-toast'
+import toast from "react-hot-toast";
 
 function newListing() {
   const router = useRouter();
@@ -65,7 +65,8 @@ function newListing() {
     const storageRef = ref(storage, `/files/${listing.image.name}`);
     const uploadTask = uploadBytesResumable(storageRef, listing.image);
     await uploadTask.on(
-      (err) => console.log(err),
+      (err) => {
+        console.log(err)},
       () => {
         // download url
         getDownloadURL(uploadTask.snapshot.ref).then((url) => {
@@ -76,13 +77,12 @@ function newListing() {
             })
             .then((resp) => {
               console.log(resp);
-              toast("Item Posted")
+              toast("Item Posted");
             });
         });
       }
     );
-    setTimeout(
-    router.push("/"), 3000);
+    setTimeout(() => {router.push("/")}, 3000);
   }
 
   return (
