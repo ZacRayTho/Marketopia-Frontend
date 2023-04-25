@@ -27,6 +27,12 @@ function Browse({
             .includes(filter.filterBy.toLowerCase())
       );
     }
+    if (filter.type === "min") {
+      filterFunctions.push((listing) => listing.price >= filter.filterBy)
+    }
+    if (filter.type === "max") {
+      filterFunctions.push((listing) => listing.price <= filter.filterBy)
+    }
     if (filter.type === "Location") {
       const cityArray = filter.filterBy.map(
         (city) => `${city.city}, ${city.state}`
@@ -44,10 +50,10 @@ function Browse({
 
     let sortedListings = [...filteredListings];
     switch (sort) {
-      case 'pricea':
+      case "pricea":
         sortedListings = sortedListings.sort((a, b) => a.price - b.price);
         break;
-      case 'priced':
+      case "priced":
         sortedListings = sortedListings.sort((a, b) => b.price - a.price);
         break;
     }

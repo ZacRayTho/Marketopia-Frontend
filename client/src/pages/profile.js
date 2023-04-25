@@ -15,6 +15,8 @@ function profile() {
   const [user, setUser] = useState(null);
   const [showModal, setShowModal] = useState(false);
   const [modalData, setModalData] = useState(null);
+  const [ownListing, setOwnListings] = useState(false)
+  const [savedListing, setSavedListing] = useState(false)
 
   useEffect(() => {
     axios.get(API_URL + "listings/").then((resp) => {
@@ -46,6 +48,10 @@ function profile() {
     setShowModal(true);
   }
 
+  function showOwnListings() {
+    setOwnListings(!ownListing)
+  }
+
   return (
     <div className="w-full h-full space-y-5">
       <EditModal
@@ -59,9 +65,10 @@ function profile() {
           Log out
         </button>
       </div>
-      <div className="text-center text-lg">
+      <button className="btn flex mx-auto" onClick={showOwnListings}>Your Listings</button>
+      <div className={ ownListing ? "text-center text-lg" : "text-center text-lg hidden"}>
         <div>Your Listings</div>
-        <div className="flex justify-center">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
           {listings
             .filter(
               (listing) => listing.seller.id == state.currentUser?.user_id
@@ -77,6 +84,27 @@ function profile() {
                 </button>
               </div>
             ))}
+        </div>
+      </div>
+      <button className="btn flex mx-auto" onClick={() => setSavedListing(!savedListing)}>Saved Listings</button>
+      <div className={ savedListing ? "text-center text-lg" : "text-center text-lg hidden"}>
+        <div>Saved Listings</div>
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+          {/* {listings
+            .filter(
+              (listing) => listing.seller.id == state.currentUser?.user_id
+            )
+            .map((listing) => (
+              <div key={listing.id}>
+                <ListingCard key={listing.id} listing={listing} page="edit" />
+                <button className="btn" onClick={() => edit(listing)}>
+                  Edit
+                </button>
+                <button className="btn" onClick={() => destroy(listing.id)}>
+                  Delete
+                </button>
+              </div>
+            ))} */}
         </div>
       </div>
     </div>

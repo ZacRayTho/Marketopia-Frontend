@@ -24,7 +24,7 @@ function Filters({ setFilter, filter, setShowFilter, setSort }) {
     });
     ref.current.value = null;
   }
- 
+
   function locationFilter() {
     axios
       .post(API_URL + `locations2/`, {
@@ -68,12 +68,26 @@ function Filters({ setFilter, filter, setShowFilter, setSort }) {
         <hr className="border border-t-1 border-gray-200 my-4 w-4/5" />
         <div>
           <label htmlFor="sort">Sort By:</label>
-          <select name="sort" id="sort" onChange={(e) => {setSort(e.target.value)}}>
-            <option value={""} disabled></option>
+          <select
+            name="sort"
+            id="sort"
+            onChange={(e) => {
+              setSort(e.target.value);
+            }}
+          >
+            <option value={""} ></option>
             <option value="pricea">Price (Asc)</option>
             <option value="priced">Price (Dsc)</option>
             <option value="range">Range </option>
           </select>
+        </div>
+        <hr className="border border-t-1 border-gray-200 my-4 w-4/5" />
+        <div>
+          <label className="flex justify-center" htmlFor="category">Price:</label>
+          <div className="flex justify-around">
+            <input type="number" className="border w-1/4" placeholder="Min" onChange={(e) => {handleChange("min", e.target.value)}}/>
+            <input type="number" className="border w-1/4" placeholder="Max" onChange={(e) => {handleChange("max", e.target.value)}}/>
+          </div>
         </div>
         <hr className="border border-t-1 border-gray-200 my-4 w-4/5" />
         <div>
@@ -109,7 +123,7 @@ function Filters({ setFilter, filter, setShowFilter, setSort }) {
             />
           </div>
           <div className="items-center flex justify-center">
-            <label for="range">Range:</label>
+            <label htmlFor="range">Range:</label>
             <input
               type="range"
               id="range"

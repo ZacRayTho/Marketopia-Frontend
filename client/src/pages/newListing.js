@@ -4,7 +4,7 @@ import { API_URL } from "../services/auth.constants";
 import { useGlobalState } from "../context/GlobalState";
 import { useRouter } from "next/navigation";
 import storage from "../firebaseConfig";
-import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
+import { getDownloadURL, ref, uploadBytes, uploadBytesResumable } from "firebase/storage";
 import toast from "react-hot-toast";
 
 function newListing() {
@@ -63,26 +63,20 @@ function newListing() {
       });
 
     const storageRef = ref(storage, `/files/${listing.image.name}`);
-    const uploadTask = uploadBytesResumable(storageRef, listing.image);
-    await uploadTask.on(
-      (err) => {
-        console.log(err)},
-      () => {
-        // download url
-        getDownloadURL(uploadTask.snapshot.ref).then((url) => {
-          axios
-            .post(API_URL + "images/", {
-              pic: url,
-              owner: listing_id,
-            })
-            .then((resp) => {
-              console.log(resp);
-              toast("Item Posted");
-            });
-        });
-      }
-    );
-    setTimeout(() => {router.push("/")}, 3000);
+    uploadBytes(storageRef, listing.image).then((snapshot) => {
+      getDownloadURL(storageRef).then((url) => {
+        axios
+          .post(API_URL + "images/", {
+            pic: url,
+            owner: listing_id,
+          })
+          .then((resp) => {
+            console.log(resp);
+            toast("Item Posted");
+          });
+      });
+    });
+    router.push("/");
   }
 
   return (

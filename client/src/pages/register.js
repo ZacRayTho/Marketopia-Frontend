@@ -1,18 +1,38 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import AuthService from "../services/auth.service";
 import { useRouter } from "next/navigation";
 import { useGlobalState } from "../context/GlobalState";
+import {
+  getDownloadURL,
+  ref,
+  uploadBytes,
+  uploadBytesResumable,
+} from "firebase/storage";
+import storage from "../firebaseConfig";
 
 function register() {
-  const [ state, dispatch ] = useGlobalState();
+  const [state, dispatch] = useGlobalState();
   const router = useRouter();
+  const [pic, setPic] = useState(null);
   const [user, setUser] = useState({
     password: "",
     passwordConf: "",
     firstName: "",
     lastName: "",
     email: "",
+    image: "",
   });
+
+  useEffect(() => {
+    if (user.image !== "") {
+      AuthService.register(user);
+      dispatch({
+        currentUserToken: state.currentUserToken,
+        currentUser: state.currentUser?.user_id,
+      });
+      router.push("/");
+    }
+  }, [user.image]);
 
   const handleChange = (key, value) => {
     setUser({
@@ -21,15 +41,15 @@ function register() {
     });
   };
 
-  const handleRegister = (e) => {
+  async function handleRegister(e) {
     e.preventDefault();
-    AuthService.register(user)
-    dispatch({
-      currentUserToken: state.currentUserToken,
-      currentUser: state.currentUser.user_id,
+    const storageRef = ref(storage, `/files/${pic.name}`);
+    await uploadBytes(storageRef, pic).then((snapshot) => {
+      getDownloadURL(storageRef).then((url) => {
+        handleChange("image", url);
+      });
     });
-    router.push("/");
-  };
+  }
 
   return (
     <div className="w-screen h-screen">
@@ -63,6 +83,17 @@ function register() {
               id="email"
               required
               onChange={(e) => handleChange("email", e.target.value)}
+            />
+          </div>
+          <div className="flex justify-between m-2 items-center space-x-2">
+            <label htmlFor="image">Image:</label>
+            <input
+              className="border"
+              type="file"
+              accept="image/*"
+              id="image"
+              required
+              onChange={(e) => setPic(e.target.files[0])}
             />
           </div>
           <div className="flex justify-between m-2 items-center space-x-2">

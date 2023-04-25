@@ -40,6 +40,7 @@ import {
       password,
       firstName,
       lastName,
+      image
     }) {
       try {
         await request({
@@ -51,6 +52,7 @@ import {
             password,
             first_name: firstName,
             last_name: lastName,
+            image
           },
         });
   

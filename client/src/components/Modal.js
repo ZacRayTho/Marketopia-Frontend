@@ -79,11 +79,19 @@ function Modal({ isVisible, setShowModal, modalData }) {
           Listed in {modalData.location}
         </div>
         <div>
+          <iframe
+            className="w-full"
+            referrerPolicy="no-referrer-when-downgrade"
+            src={`https://www.google.com/maps/embed/v1/place?key=${process.env.NEXT_PUBLIC_GOOGLE_KEY}&q=${modalData.location}`}
+            allowFullScreen
+          ></iframe>
+        </div>
+        <div>
           <div className="font-bold">Seller Info:</div>
           <div className="flex items-center">
             <div>
               <Image
-                src="https://zacraytho.github.io/img/zt-logo.png"
+                src={modalData.seller.image}
                 alt=""
                 width={50}
                 height={50}
