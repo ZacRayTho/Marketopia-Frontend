@@ -8,7 +8,7 @@ function Header() {
   const [state, dispatch] = useGlobalState();
  
   return (
-    <div className="w-full flex justify-between py-2 items-center px-4 border-b-2 drop-shadow">
+    <div className="w-full flex justify-between py-2 items-center px-4 border-b-2 drop-shadow z-10">
       <div className="font-righteous lg:text-4xl text-mtpurple">
         <Link href="/">MARKETOPIA</Link>
       </div>

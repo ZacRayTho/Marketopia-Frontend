@@ -81,7 +81,7 @@ function Browse({
       >
         Options
       </div>
-      <div className="h-[calc(100vh-53px)] lg:h-[calc(100vh-53px)] grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+      <div className=" grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
         {filtered()}
       </div>
     </div>

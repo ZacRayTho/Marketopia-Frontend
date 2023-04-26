@@ -29,14 +29,14 @@ function Home() {
 
 
   return (
-    <div className=" flex flex-col">
+    <div className="h-full">
       <Modal
         setShowModal={setShowModal}
         modalData={modalData}
         isVisible={showModal}
       />
-      <div className="flex-1 flex  h-4 max-h-full ">
-        <div className={ showFilter ? "w-full xl:flex xl:w-[19%]" : "hidden w-full xl:flex xl:w-[19%]"}>
+      <div className="flex flex-grow h-full">
+        <div className={ showFilter ? "w-full xl:flex xl:w-[19%]" : "hidden w-full xl:flex xl:w-[19%] "}>
           <Filters
             setFilter={setFilter}
             filter={filter}
