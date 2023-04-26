@@ -74,14 +74,14 @@ function Browse({
     <div className="">
       <div className="text-center text-xl font-bold my-2">Today's picks</div>
       <div
-        className="btn absolute bottom-5 right-5 lg:hidden"
+        className="btn absolute bottom-5 right-5 xl:hidden"
         onClick={() => {
           setShowFilter(!showFilter);
         }}
       >
-        Options{" "}
+        Options
       </div>
-      <div className="h-[calc(100vh-6.4rem)] grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+      <div className="h-[calc(100vh-53px)] lg:h-[calc(100vh-53px)] grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
         {filtered()}
       </div>
     </div>

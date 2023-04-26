@@ -36,7 +36,7 @@ function Home() {
         isVisible={showModal}
       />
       <div className="flex-1 flex  h-4 max-h-full ">
-        <div className={ showFilter ? "w-full lg:flex lg:w-[19%]" : "hidden w-full lg:flex lg:w-[19%]"}>
+        <div className={ showFilter ? "w-full xl:flex xl:w-[19%]" : "hidden w-full xl:flex xl:w-[19%]"}>
           <Filters
             setFilter={setFilter}
             filter={filter}

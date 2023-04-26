@@ -4,7 +4,12 @@ import { API_URL } from "../services/auth.constants";
 import { useGlobalState } from "../context/GlobalState";
 import { useRouter } from "next/navigation";
 import storage from "../firebaseConfig";
-import { getDownloadURL, ref, uploadBytes, uploadBytesResumable } from "firebase/storage";
+import {
+  getDownloadURL,
+  ref,
+  uploadBytes,
+  uploadBytesResumable,
+} from "firebase/storage";
 import toast from "react-hot-toast";
 
 function newListing() {
@@ -62,20 +67,24 @@ function newListing() {
         listing_id = response.data.id;
       });
 
-    const storageRef = ref(storage, `/files/${listing.image.name}`);
-    uploadBytes(storageRef, listing.image).then((snapshot) => {
-      getDownloadURL(storageRef).then((url) => {
-        axios
-          .post(API_URL + "images/", {
-            pic: url,
-            owner: listing_id,
-          })
-          .then((resp) => {
-            console.log(resp);
-            toast("Item Posted");
-          });
+    for (let image of listing.image) {
+      // console.log(image, "IMAGE");
+      // console.log(image.name, "IMAGE NAME");
+      const storageRef = ref(storage, `/files/${image.name}`);
+      await uploadBytes(storageRef, image).then((snapshot) => {
+        getDownloadURL(storageRef).then((url) => {
+          axios
+            .post(API_URL + "images/", {
+              pic: url,
+              owner: listing_id,
+            })
+            .then((resp) => {
+              console.log(resp);
+            });
+        });
       });
-    });
+    }
+    toast("Item Posted");
     router.push("/");
   }
 
@@ -147,14 +156,17 @@ function newListing() {
           />
         </div>
         <div className="flex justify-between m-2 items-center space-x-2">
-          <label htmlFor="image">Image:</label>
+          <label htmlFor="image">Images:</label>
           <input
             className="border"
             type="file"
             accept="image/*"
             id="image"
             required
-            onChange={(e) => handleChange("image", e.target.files[0])}
+            multiple
+            onChange={(e) => {
+              handleChange("image", e.target.files);
+            }}
           />
         </div>
         <div className="flex">
