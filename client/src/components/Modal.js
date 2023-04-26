@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import React from "react";
+import React, { useState } from "react";
 import { useGlobalState } from "../context/GlobalState";
 import axios from "axios";
 import { API_URL } from "../services/auth.constants";
@@ -11,6 +11,7 @@ function Modal({ isVisible, setShowModal, modalData }) {
   if (!isVisible) return null;
   const router = useRouter();
   const [state, dispatch] = useGlobalState();
+  const [bigPic, setBigPic] = useState(modalData.Image[0]);
 
   function handleClose() {
     setShowModal(false);
@@ -27,18 +28,30 @@ function Modal({ isVisible, setShowModal, modalData }) {
   }
 
   async function saveListing() {
-    axios.get(API_URL + `users/${state.currentUser?.user_id}`)
-    .then(async (resp) => {
-      let options = {
-        url: `users/p/${state.currentUser?.user_id}/`, 
-        method: 'PATCH', 
-        data: { 
-           saved: [...resp.data.saved, modalData.id],
-        }
-      } 
-      await request(options) 
-      toast("Saved Listing!")
-    })}
+    axios
+      .get(API_URL + `users/${state.currentUser?.user_id}`)
+      .then(async (resp) => {
+        let options = {
+          url: `users/p/${state.currentUser?.user_id}/`,
+          method: "PATCH",
+          data: {
+            saved: [...resp.data.saved, modalData.id],
+          },
+        };
+        await request(options);
+        toast("Saved Listing!");
+      });
+  }
+
+  // function imageSwap(direction) {
+  //   switch (direction) {
+  //     case "+":
+  //       if (modalData.Image[])
+  //       break
+  //     case "-":
+  //       break
+  //   }
+  // }
 
   return (
     <div
@@ -54,35 +67,43 @@ function Modal({ isVisible, setShowModal, modalData }) {
       </button>
       <div className="h-3/5 w-full  lg:h-full lg:w-3/4">
         <div className="min-w-full flex h-full lg:h-5/6 justify-center items-center lg:mt-6">
-          <button className="mx-auto">
+          {/* <button className="mx-auto">
             <Image
               src="./img/chevronLeft.svg"
               height={100}
               width={100}
               alt=""
             />
-          </button>
+          </button> */}
           <div className=" h-full w-[80%] relative">
-            <Image src={modalData.Image[0]} fill alt="" />
+            <Image src={bigPic} fill alt="" />
           </div>
-          <button className="mx-auto">
+          {/* <button className="mx-auto" onClick={() => imageSwap("+")}>
             <Image
               src="./img/chevronRight.svg"
               height={100}
               width={100}
               alt=""
             />
-          </button>
+          </button> */}
         </div>
-        <div className="hidden min-w-full lg:flex lg:h-1/6 items-center justify-center">
-          All Images mapped here
+        <div className="hidden min-w-full lg:flex lg:h-1/6 items-center justify-around">
+          {modalData.Image.map((pic) => {
+            return (
+              <button key={pic} onClick={() => {setBigPic(pic)}}>
+                <Image src={pic} height={100} width={100} alt="" />
+              </button>
+            );
+          })}
         </div>
       </div>
       <div className="h-2/5 overflow-scroll w-full bottom-0 absolute justify-self-end bg-mtgray p-4 space-y-3 lg:h-full lg:right-0 lg:w-1/4">
-       <div className="flex justify-between items-center">
-        <div className="font-bold text-4xl flex">{modalData.title} </div>
-        <button className="btn" onClick={saveListing}>Save</button>
-       </div>
+        <div className="flex justify-between items-center">
+          <div className="font-bold text-4xl flex">{modalData.title} </div>
+          <button className="btn" onClick={saveListing}>
+            Save
+          </button>
+        </div>
         <div className="font-bold">${modalData.price}</div>
         <div className="text-sm">
           {modalData.category.map((cate) => (
