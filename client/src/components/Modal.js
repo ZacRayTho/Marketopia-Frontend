@@ -2,6 +2,10 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import React from "react";
 import { useGlobalState } from "../context/GlobalState";
+import axios from "axios";
+import { API_URL } from "../services/auth.constants";
+import request from "../services/api.request";
+import { toast } from "react-hot-toast";
 
 function Modal({ isVisible, setShowModal, modalData }) {
   if (!isVisible) return null;
@@ -21,6 +25,20 @@ function Modal({ isVisible, setShowModal, modalData }) {
       },
     });
   }
+
+  async function saveListing() {
+    axios.get(API_URL + `users/${state.currentUser?.user_id}`)
+    .then(async (resp) => {
+      let options = {
+        url: `users/p/${state.currentUser?.user_id}/`, 
+        method: 'PATCH', 
+        data: { 
+           saved: [...resp.data.saved, modalData.id],
+        }
+      } 
+      await request(options) 
+      toast("Saved Listing!")
+    })}
 
   return (
     <div
@@ -61,7 +79,10 @@ function Modal({ isVisible, setShowModal, modalData }) {
         </div>
       </div>
       <div className="h-2/5 overflow-scroll w-full bottom-0 absolute justify-self-end bg-mtgray p-4 space-y-3 lg:h-full lg:right-0 lg:w-1/4">
-        <div className="font-bold text-4xl">{modalData.title}</div>
+       <div className="flex justify-between items-center">
+        <div className="font-bold text-4xl flex">{modalData.title} </div>
+        <button className="btn" onClick={saveListing}>Save</button>
+       </div>
         <div className="font-bold">${modalData.price}</div>
         <div className="text-sm">
           {modalData.category.map((cate) => (

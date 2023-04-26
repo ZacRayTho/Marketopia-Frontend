@@ -21,9 +21,6 @@ function Home() {
   });
   const [sort, setSort] = useState(null)
 
-  const BASE_URL =
-    "https://8000-zacraytho-marketopiabac-f72s9pmcyzg.ws-us95.gitpod.io/api/listings/";
-
   useEffect(() => {
     axios.get(API_URL + "listings/").then((response) => {
       setListings(response.data);
