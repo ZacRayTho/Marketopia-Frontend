@@ -43,7 +43,7 @@ function Filters({ setFilter, filter, setShowFilter, setSort }) {
   console.log(height.current?.offsetHeight)
 
   return (
-    <div className="flex-1 border-r-2 flex flex-col justify-between" ref={height}>
+    <div className=" border-r-2 flex flex-col justify-between">
       <div className="items-center flex flex-col">
         {!state.currentUser ? null : (
           <Link href={"/newListing"} className="btn mt-2">

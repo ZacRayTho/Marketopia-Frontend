@@ -6,7 +6,7 @@ export default function Document() {
       <Head>
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Righteous&display=swap" />
       </Head>
-      <body >
+      <body className='overflow-x-hidden'>
         <Main />
         <NextScript />
       </body>

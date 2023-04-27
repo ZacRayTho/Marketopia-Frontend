@@ -71,7 +71,7 @@ function Browse({
   }
 
   return (
-    <div className="">
+    <div className="min-w-full">
       <div className="text-center text-xl font-bold my-2">Today's picks</div>
       <div
         className="btn absolute bottom-5 right-5 xl:hidden"
