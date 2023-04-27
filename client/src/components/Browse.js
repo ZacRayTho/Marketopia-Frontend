@@ -15,7 +15,7 @@ function Browse({
     const filterFunctions = [];
     if (filter.type === "category") {
       filterFunctions.push(
-        (listing) => listing.category[0].id == filter.filterBy
+        (listing) => listing.category[0].id === filter.filterBy
       );
     }
     if (filter.type === "search") {
@@ -55,6 +55,8 @@ function Browse({
         break;
       case "priced":
         sortedListings = sortedListings.sort((a, b) => b.price - a.price);
+        break;
+      default:
         break;
     }
 

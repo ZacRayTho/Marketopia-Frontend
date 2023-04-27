@@ -1,16 +1,9 @@
 import axios from "axios";
-import Image from "next/image";
 import React, { useState } from "react";
 import { API_URL } from "../services/auth.constants";
 
-function EditModal({ isVisible, setShowModal, modalData }) {
+function EditModal({ isVisible, setShowModal, modalData, form, setForm }) {
     if (!isVisible) return null;
-
-    const [form, setForm] = useState({
-        title: modalData.title,
-        description: modalData.description,
-        price: modalData.price
-    })
 
     function handleChange(key, value) {
         setForm({

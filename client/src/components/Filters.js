@@ -154,7 +154,7 @@ function Filters({ setFilter, filter, setShowFilter, setSort }) {
       </div>
       <div>
         <button
-          disabled={filter.type == ""}
+          disabled={filter.type === ""}
           className="btn flex mx-auto my-2 disabled:opacity-50"
           onClick={() => {
             setFilter({

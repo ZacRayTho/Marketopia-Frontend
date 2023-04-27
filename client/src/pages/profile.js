@@ -21,6 +21,11 @@ function Profile() {
   const [modalData, setModalData] = useState(null);
   const [ownListing, setOwnListings] = useState(false);
   const [savedListing, setSavedListing] = useState(false);
+  const [form, setForm] = useState({
+    title: modalData?.title,
+    description: modalData?.description,
+    price: modalData?.price
+})
 
   useEffect(() => {
     axios.get(API_URL + "listings/").then((resp) => {
@@ -51,6 +56,7 @@ function Profile() {
   }
 
   function edit(listing) {
+
     setModalData(listing);
     setShowModal(true);
   }
@@ -81,6 +87,8 @@ function Profile() {
         isVisible={showModal}
         setShowModal={setShowModal}
         modalData={modalData}
+        form={form}
+        setForm={setForm}
       />
       <Modal
         isVisible={showModal2}

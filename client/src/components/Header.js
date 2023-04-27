@@ -4,7 +4,6 @@ import { useGlobalState } from "../context/GlobalState";
 import { useRouter } from "next/navigation";
 
 function Header() {
-  const router = useRouter();
   const [state, dispatch] = useGlobalState();
 
   return (
