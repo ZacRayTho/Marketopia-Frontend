@@ -11,7 +11,6 @@ function Filters({ setFilter, filter, setShowFilter, setSort }) {
   const [sliderValue, setSliderValue] = useState(50);
   const zipcode = useRef(null);
   const ref = useRef(null);
-  const height = useRef(null);
   useEffect(() => {
     axios.get(API_URL + "categories/").then((resp) => {
       setCategories(resp.data);
@@ -39,11 +38,8 @@ function Filters({ setFilter, filter, setShowFilter, setSort }) {
         });
       });
   }
-
-  console.log(height.current?.offsetHeight)
-
   return (
-    <div className=" border-r-2 flex flex-col justify-between">
+    <div className="flex-1 lg:border-r-2 flex flex-col justify-between md:w-1/2 mx-auto">
       <div className="items-center flex flex-col">
         {!state.currentUser ? null : (
           <Link href={"/newListing"} className="btn mt-2">
@@ -117,7 +113,7 @@ function Filters({ setFilter, filter, setShowFilter, setSort }) {
         <hr className="border border-t-1 border-gray-200 mt-4 w-4/5" />
 
         <div className="my-4  space-y-2">
-          <div className="flex justify-center">
+          <div className="xl:flex justify-center">
             <label htmlFor="location">Location:</label>
             <input
               type="number"

@@ -29,14 +29,14 @@ function Home() {
 
 
   return (
-    <div className="w-full">
+    <div className="flex flex-col">
       <Modal
         setShowModal={setShowModal}
         modalData={modalData}
         isVisible={showModal}
       />
-      <div className="flex">
-        <div className={ showFilter ? "w-full xl:flex xl:w-[19%]" : "hidden w-full xl:flex xl:w-[19%] "}>
+      <div className="flex-1 flex  h-4 max-h-full ">
+        <div className={ showFilter ? "w-full lg:flex lg:w-[19%]" : "hidden w-full lg:flex lg:w-[19%]"}>
           <Filters
             setFilter={setFilter}
             filter={filter}
@@ -45,7 +45,7 @@ function Home() {
             setSort={setSort}
           />
         </div>
-        <div className="flex-1 bg-mtgray overflow-scroll w-full">
+        <div className="flex-1 bg-mtgray overflow-scroll ">
           <Browse
             listings={listings}
             setShowModal={setShowModal}

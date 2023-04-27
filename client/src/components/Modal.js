@@ -60,7 +60,7 @@ function Modal({ isVisible, setShowModal, modalData }) {
       id="wrapper"
     >
       <button
-        className="fixed left-2 top-2 rounded-full bg-white px-4 py-2 "
+        className="fixed left-2 top-2 rounded-full bg-white px-3 py-1"
         onClick={handleClose}
       >
         X

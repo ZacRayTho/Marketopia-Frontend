@@ -9,12 +9,10 @@ export default function MyApp({ Component, pageProps }) {
   return (
     <GlobalProvider>
       <Toaster />
-      <div className="h-full flex flex-col w-screen">
-        <Header />
-        <div className="flex flex-1 w-screen">
-          <Component {...pageProps} />
-        </div>
-      </div>
+
+      <Header />
+
+      <Component {...pageProps} />
     </GlobalProvider>
   );
 }
