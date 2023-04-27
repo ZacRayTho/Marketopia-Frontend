@@ -5,7 +5,7 @@ import { useGlobalState } from "../../context/GlobalState";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 
-function index() {
+function Index() {
   const [state, dispatch] = useGlobalState();
   const [chats, setChats] = useState([]);
   const router = useRouter();
@@ -44,4 +44,4 @@ function index() {
   );
 }
 
-export default index;
+export default Index;

@@ -7,7 +7,7 @@ import axios from "axios";
 import { API_URL } from "../../services/auth.constants";
 import toast from "react-hot-toast";
 
-function chat() {
+function Chat() {
   const [state, dispatch] = useGlobalState();
   const [chat, setChat] = useState([]);
   const [review, setReview] = useState([]);
@@ -148,4 +148,4 @@ function chat() {
   );
 }
 
-export default chat;
+export default Chat;

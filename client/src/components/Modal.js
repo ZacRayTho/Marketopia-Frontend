@@ -7,11 +7,9 @@ import { API_URL } from "../services/auth.constants";
 import request from "../services/api.request";
 import { toast } from "react-hot-toast";
 
-function Modal({ isVisible, setShowModal, modalData }) {
+function Modal({ isVisible, setShowModal, modalData, router, state, bigPic, setBigPic }) {
   if (!isVisible) return null;
-  const router = useRouter();
-  const [state, dispatch] = useGlobalState();
-  const [bigPic, setBigPic] = useState(modalData.Image[0]);
+
 
   function handleClose() {
     setShowModal(false);

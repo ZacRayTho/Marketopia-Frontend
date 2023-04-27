@@ -5,7 +5,7 @@ import { useGlobalState } from '../context/GlobalState';
 import authService from '../services/auth.service';
 import jwtDecode from 'jwt-decode';
 
-function login() {
+function Login() {
     const router = useRouter();
 
     const [ state, dispatch ] = useGlobalState();
@@ -73,4 +73,4 @@ function login() {
     )
 }
 
-export default login
+export default Login

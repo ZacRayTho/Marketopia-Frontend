@@ -11,7 +11,7 @@ import request from "../services/api.request";
 import toast from 'react-hot-toast'
 import Modal from "../components/Modal";
 
-function profile() {
+function Profile() {
   const router = useRouter();
   const [state, dispatch] = useGlobalState();
   const [listings, setListings] = useState([]);
@@ -151,4 +151,4 @@ function profile() {
   );
 }
 
-export default profile;
+export default Profile;

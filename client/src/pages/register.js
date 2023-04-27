@@ -10,7 +10,7 @@ import {
 } from "firebase/storage";
 import storage from "../firebaseConfig";
 
-function register() {
+function Register() {
   const [state, dispatch] = useGlobalState();
   const router = useRouter();
   const [pic, setPic] = useState(null);
@@ -139,4 +139,4 @@ function register() {
   );
 }
 
-export default register;
+export default Register;

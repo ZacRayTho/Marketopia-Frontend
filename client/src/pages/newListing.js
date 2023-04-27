@@ -7,7 +7,7 @@ import storage from "../firebaseConfig";
 import { getDownloadURL, ref, uploadBytes, uploadBytesResumable } from "firebase/storage";
 import toast from "react-hot-toast";
 
-function newListing() {
+function NewListing() {
   const router = useRouter();
 
   const [categories, setCategories] = useState([]);
@@ -179,4 +179,4 @@ function newListing() {
   );
 }
 
-export default newListing;
+export default NewListing;
