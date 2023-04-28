@@ -38,18 +38,16 @@ function NewListing() {
 
   async function handleRegister(e) {
     e.preventDefault();
-    let location;
-    let listing_id;
+    
 
-    await axios
+    let resp = await axios
       .post(API_URL + "locations/", {
         zip: listing.location,
       })
-      .then((resp) => {
-        location = resp.data.id;
-      });
-
-    await axios
+      
+    let location = resp.data.id;
+      console.log(location)
+    let response = await axios
       .post(API_URL + "listings/", {
         title: listing.title,
         description: listing.description,
@@ -58,9 +56,8 @@ function NewListing() {
         category: [parseInt(listing.category)],
         seller: state.currentUser?.user_id,
       })
-      .then((response) => {
-        listing_id = response.data.id;
-      });
+      
+    let listing_id = response.data.id;
 
     const storageRef = ref(storage, `/files/${listing.image.name}`);
     uploadBytes(storageRef, listing.image).then((snapshot) => {

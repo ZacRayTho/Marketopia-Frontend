@@ -1,11 +1,12 @@
 import React from "react";
 import Image from "next/image";
 
-function ListingCard({ listing, setShowModal, setModalData, page }) {
+function ListingCard({ listing, setShowModal, setModalData, page, setBigPic }) {
   return (
     <div
       className="w-36 md:w-44 2xl:w-72 mb-4 mx-auto bg-transparent rounded-lg cursor-pointer"
       onClick={page == "browse" ? () => {
+        setBigPic(listing.Image[0])
         setModalData(listing);
         setShowModal(true);
       } : null}

@@ -9,6 +9,7 @@ function Browse({
   showFilter,
   setShowFilter,
   sort,
+  setBigPic
 }) {
   function filtered() {
     // Define filter functions for each active filter
@@ -67,6 +68,7 @@ function Browse({
         listing={listing}
         setShowModal={setShowModal}
         setModalData={setModalData}
+        setBigPic={setBigPic}
         page="browse"
       />
     ));

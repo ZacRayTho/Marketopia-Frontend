@@ -38,8 +38,8 @@ function Profile() {
       setUser(resp.data);
     });
   }, []);
+  console.log(user)
 
-  // console.log(user?.saved);
 
   function logout() {
     AuthService.logout();
@@ -80,7 +80,7 @@ function Profile() {
       window.location.reload(true)
     })
   }
-  
+  console.log(user?.saved)
   return (
     <div className="w-full h-full space-y-5">
       <EditModal
@@ -143,7 +143,7 @@ function Profile() {
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
           {listings
             .filter(
-              (listing) => user.saved.includes(listing.id)
+              (listing) => (user?.saved || []).includes(listing.id)
             )
             .map((listing) => (
               <div key={listing.id}>

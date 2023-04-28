@@ -62,6 +62,7 @@ function Home() {
             showFilter={showFilter}
             setShowFilter={setShowFilter}
             sort={sort}
+            setBigPic={setBigPic}
           />
         </div>
       </div>

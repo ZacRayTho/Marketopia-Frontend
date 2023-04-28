@@ -69,6 +69,7 @@ function Filters({ setFilter, filter, setShowFilter, setSort }) {
         <div>
           <label htmlFor="sort">Sort By:</label>
           <select
+          className="rounded-lg"
             name="sort"
             id="sort"
             onChange={(e) => {
@@ -85,15 +86,15 @@ function Filters({ setFilter, filter, setShowFilter, setSort }) {
         <div>
           <label className="flex justify-center" htmlFor="category">Price:</label>
           <div className="flex justify-around">
-            <input type="number" className="border w-1/4" placeholder="Min" onChange={(e) => {handleChange("min", e.target.value)}}/>
-            <input type="number" className="border w-1/4" placeholder="Max" onChange={(e) => {handleChange("max", e.target.value)}}/>
+            <input type="number" className="border w-1/4 rounded-lg px-1" placeholder="Min" onChange={(e) => {handleChange("min", e.target.value)}}/>
+            <input type="number" className="border w-1/4 rounded-lg px-1" placeholder="Max" onChange={(e) => {handleChange("max", e.target.value)}}/>
           </div>
         </div>
         <hr className="border border-t-1 border-gray-200 my-4 w-4/5" />
         <div>
           <label htmlFor="category">Category:</label>
           <select
-            className="border"
+            className="border rounded-lg"
             onChange={(e) => {
               console.log(e.target.value);
               handleChange("category", e.target.value);
@@ -118,7 +119,7 @@ function Filters({ setFilter, filter, setShowFilter, setSort }) {
             <input
               type="number"
               placeholder="Zip Code"
-              className="border"
+              className="border rounded-lg px-1"
               ref={zipcode}
             />
           </div>

@@ -29,11 +29,12 @@ function Modal({ isVisible, setShowModal, modalData, router, state, bigPic, setB
     axios
       .get(API_URL + `users/${state.currentUser?.user_id}`)
       .then(async (resp) => {
+        let savedData = resp.data.saved || [];
         let options = {
           url: `users/p/${state.currentUser?.user_id}/`,
           method: "PATCH",
           data: {
-            saved: [...resp.data.saved, modalData.id],
+            saved: [...savedData, modalData.id],
           },
         };
         await request(options);

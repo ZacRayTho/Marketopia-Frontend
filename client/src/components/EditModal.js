@@ -38,12 +38,12 @@ function EditModal({ isVisible, setShowModal, modalData, form, setForm }) {
             >
                 X
             </button>
-            <div className="mx-auto h-2/5 w-1/5 bg-mtgray rounded-lg p-2">
+            <div className="mx-auto h-2/5 bg-mtgray rounded-lg p-2">
                 <div className="text-lg font-bold text-center flex justify-between"><div>EDITING MODE</div> <button onClick={handleClose}>X</button></div>
                 <div className="flex justify-between m-2 items-center space-x-2">
                     <label htmlFor="title">Title:</label>
                     <input
-                        className="border "
+                        className="border rounded-lg"
                         type="text"
                         id="title"
                         value={form.title}
@@ -54,7 +54,7 @@ function EditModal({ isVisible, setShowModal, modalData, form, setForm }) {
                 <div className="flex justify-between m-2 space-x-2">
                     <label htmlFor="description">Description:</label>
                     <input
-                        className="border"
+                        className="border rounded-lg"
                         type="text"
                         id="description"
                         value={form.description}
@@ -65,7 +65,7 @@ function EditModal({ isVisible, setShowModal, modalData, form, setForm }) {
                 <div className="flex justify-between m-2 items-center space-x-2">
                     <label htmlFor="price">Price:</label>
                     <input
-                        className="border"
+                        className="border rounded-lg"
                         type="text"
                         id="price"
                         value={form.price}
