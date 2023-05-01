@@ -11,7 +11,7 @@ function EditModal({ isVisible, setShowModal, modalData, form, setForm }) {
           [key]: value,
         });
     }
-
+    console.log(form, "form")
     function handleClose() {
         setShowModal(false);
     }
@@ -59,7 +59,7 @@ function EditModal({ isVisible, setShowModal, modalData, form, setForm }) {
                         id="description"
                         value={form.description}
                         required
-                        onChange={(e) => handleChange("price", e.target.value)}
+                        onChange={(e) => handleChange("description", e.target.value)}
                     />
                 </div>
                 <div className="flex justify-between m-2 items-center space-x-2">

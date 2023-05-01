@@ -74,8 +74,8 @@ function Modal({ isVisible, setShowModal, modalData, router, state, bigPic, setB
               alt=""
             />
           </button> */}
-          <div className=" h-full w-[80%] relative">
-            <Image src={bigPic} fill alt="" />
+          <div className=" h-full w-[80%] relative items-center flex justify-center">
+            <Image className="object-contain  rounded-lg" fill src={bigPic}  alt="" />
           </div>
           {/* <button className="mx-auto" onClick={() => imageSwap("+")}>
             <Image

@@ -56,7 +56,9 @@ function Profile() {
   }
 
   function edit(listing) {
-
+    setForm({title: listing.title,
+    description: listing.description,
+  price: listing.price})
     setModalData(listing);
     setShowModal(true);
   }

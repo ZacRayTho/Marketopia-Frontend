@@ -16,7 +16,7 @@ function Browse({
     const filterFunctions = [];
     if (filter.type === "category") {
       filterFunctions.push(
-        (listing) => listing.category[0].id === filter.filterBy
+        (listing) => parseInt(listing.category[0].id) === parseInt(filter.filterBy)
       );
     }
     if (filter.type === "search") {

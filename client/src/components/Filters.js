@@ -24,7 +24,7 @@ function Filters({ setFilter, filter, setShowFilter, setSort }) {
     });
     ref.current.value = null;
   }
-
+  
   function locationFilter() {
     axios
       .post(API_URL + `locations2/`, {
@@ -96,7 +96,7 @@ function Filters({ setFilter, filter, setShowFilter, setSort }) {
           <select
             className="border rounded-lg"
             onChange={(e) => {
-              console.log(e.target.value);
+              // console.log(e.target.value);
               handleChange("category", e.target.value);
             }}
             id="category"
@@ -131,6 +131,7 @@ function Filters({ setFilter, filter, setShowFilter, setSort }) {
               name="range"
               min="10"
               max="150"
+              className="accent-mtpurple"
               value={sliderValue}
               onChange={(e) => {
                 setSliderValue(e.target.value);
@@ -141,7 +142,7 @@ function Filters({ setFilter, filter, setShowFilter, setSort }) {
             <input
               type="number"
               value={sliderValue}
-              className="border mx-auto flex"
+              className="border mx-auto flex rounded-lg px-1"
               onChange={(e) => {
                 setSliderValue(e.target.value);
               }}
