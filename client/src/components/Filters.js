@@ -142,7 +142,7 @@ function Filters({ setFilter, filter, setShowFilter, setSort }) {
             <input
               type="number"
               value={sliderValue}
-              className="border mx-auto flex rounded-lg px-1"
+              className="border mx-auto flex rounded-lg accent-mtpurple"
               onChange={(e) => {
                 setSliderValue(e.target.value);
               }}

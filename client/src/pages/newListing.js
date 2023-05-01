@@ -38,7 +38,7 @@ function NewListing() {
 
   async function handleRegister(e) {
     e.preventDefault();
-    
+    toast("Posting...")
 
     let resp = await axios
       .post(API_URL + "locations/", {
@@ -58,7 +58,7 @@ function NewListing() {
       })
       
     let listing_id = response.data.id;
-
+    
     const storageRef = ref(storage, `/files/${listing.image.name}`);
     uploadBytes(storageRef, listing.image).then((snapshot) => {
       getDownloadURL(storageRef).then((url) => {
@@ -70,10 +70,10 @@ function NewListing() {
           .then((resp) => {
             console.log(resp);
             toast("Item Posted");
+            router.push("/");
           });
       });
     });
-    router.push("/");
   }
 
   return (
