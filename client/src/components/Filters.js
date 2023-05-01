@@ -40,7 +40,7 @@ function Filters({ setFilter, filter, setShowFilter, setSort }) {
   }
   return (
     <div className="flex-1 lg:border-r-2 flex flex-col justify-between md:w-1/2 mx-auto">
-      <div className="items-center flex flex-col">
+      <div className="items-center flex flex-col h-[calc(100vh-5.4rem)] lg:h-full overflow-scroll">
         {!state.currentUser ? null : (
           <Link href={"/newListing"} className="btn mt-2">
             New Listing
