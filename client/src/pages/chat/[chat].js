@@ -72,11 +72,11 @@ function Chat() {
   }
 
   return (
-    <div className="w-full h-[calc(100vh-6.4rem)] border-r-2 border-l-2 flex justify-center">
+    <div className="w-full h-[calc(100vh-3.4rem)] lg:h-[calc(100vh-6.4rem)] border-r-2 border-l-2 flex justify-center">
       <div className="bg-mtgray md:w-1/2 h-full text-center lg:text-xl relative overflow-y-auto">
         <div className="flex justify-between px-2 items-center">
           <div className="items-center">You're Messaging {name}!</div>
-          <div className="space-x-2 flex items-center">
+          <div className="text-sm space-x-2 flex items-center">
             <div>Review</div>
             <div>
               <button

@@ -82,9 +82,9 @@ function Profile() {
       window.location.reload(true)
     })
   }
-  console.log(user?.saved)
+  // console.log(user?.saved)
   return (
-    <div className="w-full h-full space-y-5">
+    <div className="w-full space-y-5 h-screen overflow-auto">
       <EditModal
         isVisible={showModal}
         setShowModal={setShowModal}
@@ -118,7 +118,7 @@ function Profile() {
               (listing) => listing.seller.id == state.currentUser?.user_id
             )
             .map((listing) => (
-              <div key={listing.id}>
+              <div key={listing.id} className="">
                 <ListingCard key={listing.id} listing={listing} page="edit" />
                 <button className="btn" onClick={() => edit(listing)}>
                   Edit

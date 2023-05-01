@@ -66,8 +66,8 @@ function Filters({ setFilter, filter, setShowFilter, setSort }) {
           </button>
         </div>
         <hr className="border border-t-1 border-gray-200 my-4 w-4/5" />
-        <div>
-          <label htmlFor="sort">Sort By:</label>
+        <div className="flex-col flex">
+          <div htmlFor="sort" className="flex justify-center">Sort By:</div>
           <select
           className="rounded-lg"
             name="sort"
@@ -79,7 +79,7 @@ function Filters({ setFilter, filter, setShowFilter, setSort }) {
             <option value={""} ></option>
             <option value="pricea">Price (Asc)</option>
             <option value="priced">Price (Dsc)</option>
-            <option value="range">Range </option>
+            {/* <option value="range">Range </option> */}
           </select>
         </div>
         <hr className="border border-t-1 border-gray-200 my-4 w-4/5" />
@@ -92,8 +92,10 @@ function Filters({ setFilter, filter, setShowFilter, setSort }) {
         </div>
         <hr className="border border-t-1 border-gray-200 my-4 w-4/5" />
         <div>
-          <label htmlFor="category">Category:</label>
+          <div htmlFor="category" className="flex justify-center">Category:</div>
+          <div className="overflow-y-scroll">
           <select
+          size={4}
             className="border rounded-lg"
             onChange={(e) => {
               // console.log(e.target.value);
@@ -101,7 +103,6 @@ function Filters({ setFilter, filter, setShowFilter, setSort }) {
             }}
             id="category"
           >
-            <option></option>
             {categories?.map((category) => {
               return (
                 <option value={category.id} key={category.id}>
@@ -110,12 +111,13 @@ function Filters({ setFilter, filter, setShowFilter, setSort }) {
               );
             })}
           </select>
+          </div>
         </div>
         <hr className="border border-t-1 border-gray-200 mt-4 w-4/5" />
 
         <div className="my-4  space-y-2">
-          <div className="xl:flex justify-center">
-            <label htmlFor="location">Location:</label>
+          <div className=" justify-center">
+            <div htmlFor="location" className="flex justify-center">Location:</div>
             <input
               type="number"
               placeholder="Zip Code"
@@ -123,15 +125,15 @@ function Filters({ setFilter, filter, setShowFilter, setSort }) {
               ref={zipcode}
             />
           </div>
-          <div className="items-center flex justify-center">
-            <label htmlFor="range">Range:</label>
+          <div className="items-center justify-center">
+            <div htmlFor="range" className="flex justify-center">Range:</div>
             <input
               type="range"
               id="range"
               name="range"
               min="10"
               max="150"
-              className="accent-mtpurple"
+              className="accent-mtpurple flex mx-auto"
               value={sliderValue}
               onChange={(e) => {
                 setSliderValue(e.target.value);
