@@ -44,7 +44,7 @@ function Home() {
         setBigPic={setBigPic}
       />
       <div className="flex-1 flex  h-4 max-h-full ">
-        <div className={ showFilter ? "w-full lg:flex lg:w-[19%] overflow-scroll" : "hidden w-full lg:flex lg:w-[19%] overflow-scroll"}>
+        <div className={ showFilter ? "w-full lg:flex lg:w-[19%] overflow-y-auto" : "hidden w-full lg:flex lg:w-[19%] overflow-y-auto"}>
           <Filters
             setFilter={setFilter}
             filter={filter}
