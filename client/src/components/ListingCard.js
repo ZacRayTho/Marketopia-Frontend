@@ -19,6 +19,7 @@ function ListingCard({ listing, setShowModal, setModalData, page, setBigPic }) {
           alt=""
           width={100}
           height={100}
+          unoptimized={true}
           className="w-full rounded-lg "
         />
       </div>
