@@ -4,7 +4,12 @@ import { API_URL } from "../services/auth.constants";
 import { useGlobalState } from "../context/GlobalState";
 import { useRouter } from "next/navigation";
 import storage from "../firebaseConfig";
-import { getDownloadURL, ref, uploadBytes, uploadBytesResumable } from "firebase/storage";
+import {
+  getDownloadURL,
+  ref,
+  uploadBytes,
+  uploadBytesResumable,
+} from "firebase/storage";
 import toast from "react-hot-toast";
 
 function NewListing() {
@@ -38,42 +43,48 @@ function NewListing() {
 
   async function handleRegister(e) {
     e.preventDefault();
-    toast("Posting...")
+    toast("Posting...");
 
-    let resp = await axios
-      .post(API_URL + "locations/", {
-        zip: listing.location,
-      })
-      
-    let location = resp.data.id;
-      console.log(location)
-    let response = await axios
-      .post(API_URL + "listings/", {
-        title: listing.title,
-        description: listing.description,
-        price: listing.price,
-        location: location,
-        category: [parseInt(listing.category)],
-        seller: state.currentUser?.user_id,
-      })
-      
-    let listing_id = response.data.id;
-    
-    const storageRef = ref(storage, `/files/${listing.image.name}`);
-    uploadBytes(storageRef, listing.image).then((snapshot) => {
-      getDownloadURL(storageRef).then((url) => {
-        axios
-          .post(API_URL + "images/", {
-            pic: url,
-            owner: listing_id,
-          })
-          .then((resp) => {
-            console.log(resp);
-            toast("Item Posted");
-            router.push("/");
-          });
-      });
+    // console.log(listing.image)
+    // console.log(listing.image.length)
+    // for (let pic of listing.image) {
+    //   console.log(pic.name, "NAME")
+    //   console.log(pic, "FILE")
+    // }
+
+    let resp = await axios.post(API_URL + "locations/", {
+      zip: listing.location,
     });
+
+    let location = resp.data.id;
+    console.log(location);
+    let response = await axios.post(API_URL + "listings/", {
+      title: listing.title,
+      description: listing.description,
+      price: listing.price,
+      location: location,
+      category: [parseInt(listing.category)],
+      seller: state.currentUser?.user_id,
+    });
+
+    let listing_id = response.data.id;
+    for (let pic of listing.image) {
+      const storageRef = ref(storage, `/files/${pic.name}`);
+      await uploadBytes(storageRef, pic).then((snapshot) => {
+        getDownloadURL(storageRef).then((url) => {
+          axios
+            .post(API_URL + "images/", {
+              pic: url,
+              owner: listing_id,
+            })
+            .then((resp) => {
+              console.log(resp);
+            });
+        });
+      });
+    }
+    toast("Item Posted");
+    router.push("/");
   }
 
   return (
@@ -150,8 +161,9 @@ function NewListing() {
             type="file"
             accept="image/*"
             id="image"
+            multiple
             required
-            onChange={(e) => handleChange("image", e.target.files[0])}
+            onChange={(e) => handleChange("image", e.target.files)}
           />
         </div>
         <div className="flex">

@@ -1,1 +1,0 @@
-{"c":["pages/profile","webpack"],"r":["pages/chat/[chat]"],"m":["./node_modules/moment/moment.js","./node_modules/next/dist/build/webpack/loaders/next-client-pages-loader.js?absolutePagePath=%2Fworkspace%2FMarketopia-Frontend%2Fclient%2Fsrc%2Fpages%2Fchat%2F%5Bchat%5D.js&page=%2Fchat%2F%5Bchat%5D!","./node_modules/next/router.js","./src/pages/chat/[chat].js"]}
