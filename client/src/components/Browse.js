@@ -9,14 +9,15 @@ function Browse({
   showFilter,
   setShowFilter,
   sort,
-  setBigPic
+  setBigPic,
 }) {
   function filtered() {
     // Define filter functions for each active filter
     const filterFunctions = [];
     if (filter.type === "category") {
       filterFunctions.push(
-        (listing) => parseInt(listing.category[0].id) === parseInt(filter.filterBy)
+        (listing) =>
+          parseInt(listing.category[0].id) === parseInt(filter.filterBy)
       );
     }
     if (filter.type === "search") {
@@ -29,10 +30,10 @@ function Browse({
       );
     }
     if (filter.type === "min") {
-      filterFunctions.push((listing) => listing.price >= filter.filterBy)
+      filterFunctions.push((listing) => listing.price >= filter.filterBy);
     }
     if (filter.type === "max") {
-      filterFunctions.push((listing) => listing.price <= filter.filterBy)
+      filterFunctions.push((listing) => listing.price <= filter.filterBy);
     }
     if (filter.type === "Location") {
       const cityArray = filter.filterBy.map(

@@ -5,6 +5,7 @@ import "../styles/global.css";
 import dynamic from "next/dynamic";
 import { Toaster } from "react-hot-toast";
 const Header = dynamic(() => import("../components/Header"), { ssr: false });
+import '@smastrom/react-rating/style.css';
 
 export default function MyApp({ Component, pageProps }) {
   return (

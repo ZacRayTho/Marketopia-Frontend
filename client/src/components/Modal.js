@@ -6,10 +6,19 @@ import axios from "axios";
 import { API_URL } from "../services/auth.constants";
 import request from "../services/api.request";
 import { toast } from "react-hot-toast";
+import { Rating } from "@smastrom/react-rating";
 
-function Modal({ isVisible, setShowModal, modalData, router, state, bigPic, setBigPic }) {
+function Modal({
+  isVisible,
+  setShowModal,
+  modalData,
+  router,
+  state,
+  bigPic,
+  setBigPic,
+  review,
+}) {
   if (!isVisible) return null;
-
 
   function handleClose() {
     setShowModal(false);
@@ -75,7 +84,12 @@ function Modal({ isVisible, setShowModal, modalData, router, state, bigPic, setB
             />
           </button> */}
           <div className=" h-full w-[80%] relative items-center flex justify-center">
-            <Image className="object-contain  rounded-lg" fill src={bigPic}  alt="" />
+            <Image
+              className="object-contain  rounded-lg"
+              fill
+              src={bigPic}
+              alt=""
+            />
           </div>
           {/* <button className="mx-auto" onClick={() => imageSwap("+")}>
             <Image
@@ -89,7 +103,12 @@ function Modal({ isVisible, setShowModal, modalData, router, state, bigPic, setB
         <div className="hidden min-w-full lg:flex lg:h-1/6 items-center justify-around">
           {modalData.Image.map((pic) => {
             return (
-              <button key={pic} onClick={() => {setBigPic(pic)}}>
+              <button
+                key={pic}
+                onClick={() => {
+                  setBigPic(pic);
+                }}
+              >
                 <Image src={pic} height={100} width={100} alt="" />
               </button>
             );
@@ -145,7 +164,8 @@ function Modal({ isVisible, setShowModal, modalData, router, state, bigPic, setB
                   {modalData.seller.first_name} {modalData.seller.last_name}
                 </div>
                 <div>
-                  <Image src="./img/star.svg" height={25} width={25} alt="" />
+                  <Rating value={review} style={{ maxWidth: 100 }} readOnly />
+                  {/* <Image src="./img/star.svg" height={25} width={25} alt="" /> */}
                 </div>
               </div>
               <div>

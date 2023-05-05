@@ -23,14 +23,32 @@ function Home() {
     type: "",
     filterBy: "",
   });
-  const [sort, setSort] = useState(null)
+  const [sort, setSort] = useState(null);
+  const [review, setReview] = useState(null);
+
+  function average(array) {
+    let sum = 0;
+    for (let x of array) {
+      sum += x;
+    }
+    return sum / array.length
+  }
+
+  useEffect(() => {
+    axios.get(API_URL + "reviews/").then((resp) => {
+      let arr = [];
+      for (let rate of resp.data) {
+        if (rate.seller.id === modalData.seller.id) arr.push(rate.rating);
+      }
+      setReview(average(arr));
+    });
+  }, [modalData]);
 
   useEffect(() => {
     axios.get(API_URL + "listings/").then((response) => {
       setListings(response.data);
     });
   }, []);
-
 
   return (
     <div className="flex flex-col">
@@ -42,9 +60,16 @@ function Home() {
         state={state}
         bigPic={bigPic}
         setBigPic={setBigPic}
+        review={review}
       />
       <div className="flex-1 flex  h-4 max-h-full ">
-        <div className={ showFilter ? "w-full lg:flex lg:w-[19%] overflow-y-auto" : "hidden w-full lg:flex lg:w-[19%] overflow-y-auto"}>
+        <div
+          className={
+            showFilter
+              ? "w-full lg:flex lg:w-[19%] overflow-y-auto"
+              : "hidden w-full lg:flex lg:w-[19%] overflow-y-auto"
+          }
+        >
           <Filters
             setFilter={setFilter}
             filter={filter}
