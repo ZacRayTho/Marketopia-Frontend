@@ -38,7 +38,7 @@ function Home() {
     axios.get(API_URL + "reviews/").then((resp) => {
       let arr = [];
       for (let rate of resp.data) {
-        if (rate.seller.id === modalData.seller.id) arr.push(rate.rating);
+        if (rate.seller.id === modalData?.seller.id) arr.push(rate.rating);
       }
       setReview(average(arr));
     });
