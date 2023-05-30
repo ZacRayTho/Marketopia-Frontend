@@ -17,8 +17,9 @@ function Chat() {
   const [review, setReview] = useState([]);
   const router = useRouter();
   const urldata = router?.query.chat;
-  const name = router?.query.fname + " " + router?.query.lname;
+  const name = router?.query.fname + " " + router?.query.lname
   const ref = useRef();
+  const bottom = useRef();
 
   const fetcher = (url) => axios.get(url).then((res) => res.data);
 
@@ -30,22 +31,22 @@ function Chat() {
     fetcher
   );
 
-  console.log(data);
+  // console.log(data);
 
-  useEffect(() => {
-    if (!router.isReady) return;
-    axios
-      .get(API_URL + `message_list/${state.currentUser?.user_id}/${urldata}/`)
-      .then((resp) => {
-        setChat(resp.data);
-      });
+  // useEffect(() => {
+  //   if (!router.isReady) return;
+  //   axios
+  //     .get(API_URL + `message_list/${state.currentUser?.user_id}/${urldata}/`)
+  //     .then((resp) => {
+  //       setChat(resp.data);
+  //     });
 
-    axios
-      .get(API_URL + `review_fetch/${state.currentUser?.user_id}/${urldata}/`)
-      .then((resp) => {
-        setReview(resp.data);
-      });
-  }, [router.isReady]);
+  //   axios
+  //     .get(API_URL + `review_fetch/${state.currentUser?.user_id}/${urldata}/`)
+  //     .then((resp) => {
+  //       setReview(resp.data);
+  //     });
+  // }, [router.isReady]);
 
   useEffect(() => {
     const channel = pusher.subscribe("messages");
@@ -55,11 +56,13 @@ function Chat() {
         mutate(fetcher);
       } else {
         mutate(fetcher, {
-          optimisticData: [newData, ...data],
+          optimisticData: [...data, newData],
           rollbackOnError: true,
         });
       }
     });
+
+    bottom.current?.scrollIntoView({ behavior: 'smooth' });
   }, [data, mutate, pusher]);
 
   async function send() {
@@ -74,7 +77,11 @@ function Chat() {
       })
       .then((resp) => {
         console.log(resp.data, "CHECK ME OUT HERE");
-        mutate([resp.data, ...data]);
+        mutate([...data, resp.data], {
+          optimisticData: [...data, resp.data],
+          rollbackOnError: true,
+        });
+        ref.current.value = "";
       });
     // window.location.reload(true);
   }
@@ -146,33 +153,36 @@ function Chat() {
         </div>
         <div className="border h-[calc(100vh-10.5rem)]">
           <div className="h-full  overflow-y-auto">
-            {data?.map((message, index) => {
-              return (
-                <div className="space-y-5 px-1 pt-1" key={index}>
-                  <MessageComponent message={message} state={state} />
-                </div>
-                // <div
-                //   className={
-                //     message.sender == state.currentUser?.user_id
-                //       ? "w-full flex justify-end"
-                //       : "w-full flex justify-start"
-                //   }
-                // >
-                //   <div
-                //     className={
-                //       message.sender == state.currentUser?.user_id
-                //         ? "border px-4 rounded-full border-mtpurple w-fit"
-                //         : "border px-4 rounded-full"
-                //     }
-                //   >
-                //     {message.text}
-                //   </div>
-                // </div>
-              );
-            })}
+            {typeof data === "object"
+              ? data?.map((message, index) => {
+                  return (
+                    <div className="space-y-5 px-1 pt-1" key={index}>
+                      <MessageComponent message={message} state={state} />
+                    </div>
+                    // <div
+                    //   className={
+                    //     message.sender == state.currentUser?.user_id
+                    //       ? "w-full flex justify-end"
+                    //       : "w-full flex justify-start"
+                    //   }
+                    // >
+                    //   <div
+                    //     className={
+                    //       message.sender == state.currentUser?.user_id
+                    //         ? "border px-4 rounded-full border-mtpurple w-fit"
+                    //         : "border px-4 rounded-full"
+                    //     }
+                    //   >
+                    //     {message.text}
+                    //   </div>
+                    // </div>
+                  );
+                })
+              : null}
+            <div ref={bottom}></div>
           </div>
         </div>
-        <div className="flex absolute bottom-0 w-full">
+        <form className="flex absolute bottom-0 w-full">
           <input
             type="text"
             placeholder="Type your message!"
@@ -188,7 +198,7 @@ function Chat() {
               className="invert"
             />
           </button>
-        </div>
+        </form>
       </div>
     </div>
   );
