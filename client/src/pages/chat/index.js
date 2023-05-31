@@ -19,6 +19,7 @@ function Index() {
   }, []);
 
   function openChat(chat) {
+    localStorage.setItem('name', `${chat.first_name} ${chat.last_name}`)
     router.push({
       pathname: `/chat/${chat.id}`,
       query: {
