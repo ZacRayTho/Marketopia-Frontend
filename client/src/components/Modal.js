@@ -25,6 +25,7 @@ function Modal({
   }
 
   function chat() {
+    localStorage.setItem('name', `${modalData.seller.first_name} ${modalData.seller.last_name}`)
     router.push({
       pathname: `/chat/${modalData.seller.id}`,
       query: {
