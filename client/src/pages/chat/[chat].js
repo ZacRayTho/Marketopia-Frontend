@@ -96,7 +96,7 @@ function Chat() {
     if (review.length == 0) {
       axios
         .post(API_URL + "reviews/", {
-          seller: data,
+          seller: urldata,
           reviewer: state.currentUser.user_id,
           rating: stars,
         })

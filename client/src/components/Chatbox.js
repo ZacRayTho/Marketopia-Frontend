@@ -59,7 +59,7 @@ function Chatbox({ state }) {
     bottom.current?.scrollIntoView({ behavior: "smooth" });
   }, [data, mutate, pusher]);
 
-  async function send() {
+  async function send(event) {
     event.preventDefault()
     await axios
       .post(API_URL + "messages/", {
